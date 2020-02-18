@@ -1,12 +1,26 @@
 package com.example.runningapp;
 
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
 
-public class homepage  extends AppCompatActivity {
+public class homepage extends AppCompatActivity {
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.homepage_view);
+        setContentView(R.layout.login_view);
+        dbHandler db_handler = new dbHandler(this);
+        System.out.println("TEMP --------------"+db_handler.userTemp);
+        //Firebase test
+        User us = new User("2","1","Guillaume","toto@gmail.com","BETROM",5,5,5,5,5);
+        db_handler.addUser(us);
+
+        db_handler.getUser("2");
+
+        if(db_handler.flag == 1){
+            System.out.println("TEMP --------------"+db_handler.userTemp);
+        }
+
     }
 }

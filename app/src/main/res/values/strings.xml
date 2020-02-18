@@ -1,4 +1,6 @@
 <resources>
-    <string name="app_name">runningApp</string>
-    <string name="officialname">The Running App</string>
+    <string name="appname">The Running App</string>
+
+    <string name="action_sign_in">Log In</string>
+    <string name="backtomain">Back</string>
 </resources>
