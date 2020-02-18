@@ -30,6 +30,9 @@ public class dbHandler extends SQLiteOpenHelper {
     FirebaseDatabase remoteDatabase = FirebaseDatabase.getInstance();
     DatabaseReference userRef = remoteDatabase.getReference("User");
 
+    User userTemp;
+    int flag = 0;
+
     // Database Version
     private static final int DATABASE_VERSION = 1;
 
@@ -74,6 +77,7 @@ public class dbHandler extends SQLiteOpenHelper {
 
         //Links the remote database
         remoteDatabase = FirebaseDatabase.getInstance();
+        userTemp = new User("0","0","0","0","0",1,1,1,1,1);
 
     }
 
@@ -164,11 +168,10 @@ public class dbHandler extends SQLiteOpenHelper {
 
     }
 
-    public User getUser(final String userID){
+    public void getUser(final String userID){
         // Read from the database
         final ArrayList<Object> children = new ArrayList<>();
-        final User userTemp = new User();
-        userRef.addValueEventListener(new ValueEventListener() {
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -180,8 +183,8 @@ public class dbHandler extends SQLiteOpenHelper {
                     children.add(var);
                     System.out.println("VAR  ------- "+var);
                 }
-
-                userTemp.update(String.valueOf(userID),String.valueOf(children.get(7)),String.valueOf(children.get(6)),String.valueOf(children.get(0)),String.valueOf(children.get(8)),Float.parseFloat(String.valueOf(children.get(2))),Float.parseFloat(String.valueOf(children.get(1))),Float.parseFloat(String.valueOf(children.get(5))),Float.parseFloat(String.valueOf(children.get(3))),Float.parseFloat(String.valueOf(children.get(4))));
+                //userTemp.update(String.valueOf(userID),String.valueOf(children.get(7)),String.valueOf(children.get(6)),String.valueOf(children.get(0)),String.valueOf(children.get(8)),Float.parseFloat(String.valueOf(children.get(2))),Float.parseFloat(String.valueOf(children.get(1))),Float.parseFloat(String.valueOf(children.get(5))),Float.parseFloat(String.valueOf(children.get(3))),Float.parseFloat(String.valueOf(children.get(4))));
+                flag = 1;
             }
             @Override
             public void onCancelled(DatabaseError error) {
@@ -189,7 +192,11 @@ public class dbHandler extends SQLiteOpenHelper {
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
-        return userTemp;
+
+        //System.out.println("User "+ userTemp);
+        //userTemp.update(String.valueOf(userID),String.valueOf(children.get(7)),String.valueOf(children.get(6)),String.valueOf(children.get(0)),String.valueOf(children.get(8)),Float.parseFloat(String.valueOf(children.get(2))),Float.parseFloat(String.valueOf(children.get(1))),Float.parseFloat(String.valueOf(children.get(5))),Float.parseFloat(String.valueOf(children.get(3))),Float.parseFloat(String.valueOf(children.get(4))));
+
+        //return userTemp;
     }
 
 //    public int findNextAvailableExpID(User user) {

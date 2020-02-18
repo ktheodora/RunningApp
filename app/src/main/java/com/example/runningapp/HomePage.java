@@ -11,12 +11,16 @@ public class HomePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_view);
         dbHandler db_handler = new dbHandler(this);
-
+        System.out.println("TEMP --------------"+db_handler.userTemp);
         //Firebase test
         User us = new User("2","1","Guillaume","toto@gmail.com","BETROM",5,5,5,5,5);
         db_handler.addUser(us);
 
-        User temp = db_handler.getUser("2");
-        System.out.println("TEMP --------------"+temp.toString());
+        db_handler.getUser("2");
+
+        if(db_handler.flag == 1){
+            System.out.println("TEMP --------------"+db_handler.userTemp);
+        }
+
     }
 }

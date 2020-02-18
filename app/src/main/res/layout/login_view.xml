@@ -145,6 +145,12 @@ android:layout_height="match_parent">
             android:textColor="#ffffff"
             android:textSize="15sp"
             />
+
+        <TextView
+            android:id="@+id/userUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
     </LinearLayout>
 </ScrollView>
 </android.support.v4.widget.DrawerLayout>
