@@ -1,6 +1,271 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.runningapp.homepage">
 
-</LinearLayout>
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@drawable/wallnew"
+                android:orientation="horizontal"
+                android:textAlignment="center">
+
+                <ImageButton
+
+                    android:id="@+id/menuLines"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:background="#00000000"
+                    android:layout_marginLeft="8dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/menu7" />
+
+                <TextView
+                    android:id="@+id/editText"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:text="@string/officialname"
+                    android:fontFamily="cursive"
+                    android:scaleType="center"
+                    android:layout_width="wrap_content"
+                    android:textColor="#ffffff"
+                    android:textAlignment="center"
+                    android:textSize="40sp" />
+
+                <ImageButton
+                    android:id="@+id/imageButton"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="8dp"
+                    android:background="#00000000"
+                    android:scaleType="fitStart"
+                    app:srcCompat="@drawable/logo" />
+
+
+            </LinearLayout>
+
+
+
+            <TextView
+                android:id="@+id/speedTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/circle"
+                android:gravity="center"
+                android:textColor="#FFFFFF"
+                android:layout_marginTop="50dp"
+                android:textSize="30sp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="40dp"
+
+                android:background="#F5F5F5">
+
+                <Button
+                    android:id="@+id/startStopbtn"
+                    android:layout_width="130dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:text="Start running"
+                    android:gravity="center"
+                    android:textColor="#ffffff"
+                    android:textSize="15sp"
+                    android:background="#90A4AE"/>
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/HomePage"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:text="Today's Running Conditions"
+                android:layout_marginTop="20dp"
+                android:textColor="#3389FF"
+                android:fontFamily="cursive"
+                android:scaleType="center"
+                android:layout_width="wrap_content"
+                android:textAlignment="center"
+                android:textSize="25sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:background="#F5F5F5">
+
+                <ImageView
+                    android:id="@+id/weathericon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/weather" />
+
+                <TextView
+                    android:id="@+id/city"
+                    android:layout_width="190dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="City Name"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    />
+
+                <TextView
+                    android:id="@+id/degrees"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:textColor="#3389FF"
+                    android:text="Weather Deg."
+                    android:textSize="20sp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:background="#F5F5F5">
+
+                <ImageView
+                    android:id="@+id/rateicon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/humidity" />
+
+                <TextView
+                    android:id="@+id/rate"
+                    android:layout_width="190dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Humidity"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    />
+
+                <TextView
+                    android:id="@+id/ratetview"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:text="40%"
+                    android:textColor="#3389FF"
+                    android:textSize="20sp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:background="#F5F5F5">
+
+                <ImageView
+                    android:id="@+id/clothesicon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/tshirt" />
+
+                <TextView
+                    android:id="@+id/budget"
+                    android:layout_width="190dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Rec. Outfit"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    />
+
+                <TextView
+                    android:id="@+id/clothesview"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:text="Light Jacket"
+                    android:textColor="#3389FF"
+                    android:textSize="20sp" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity = "center"
+                android:layout_marginTop="30dp"
+                android:background="#F5F5F5"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/showStatsbtn"
+                    android:layout_width="130dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:text="Show Statistics"
+                    android:background="#90A4AE"
+                    android:textColor="#ffffff"
+                    android:textSize="15sp" />
+                <Button
+                    android:id="@+id/routesbtn"
+                    android:layout_width="130dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:background="#90A4AE"
+                    android:textColor="#ffffff"
+                    android:layout_marginLeft="8dp"
+                    android:text="All routes"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</android.support.v4.widget.DrawerLayout>
