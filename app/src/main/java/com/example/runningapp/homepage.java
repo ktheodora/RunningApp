@@ -23,16 +23,14 @@ public class homepage extends AppCompatActivity {
 
         setContentView(R.layout.homepage_view);
         dbHandler db_handler = new dbHandler(this);
+        db_handler.setCtx(this);
+
         System.out.println("TEMP --------------"+db_handler.userTemp);
         //Firebase test
         User us = new User("2","1","Guillaume","toto@gmail.com","BETROM",5,5,5,5,5);
         db_handler.addUser(us);
 
         db_handler.getUser("2");
-
-        if(db_handler.flag == 1){
-            System.out.println("TEMP --------------"+db_handler.userTemp);
-        }
 
         Button showStatsbtn = (Button) findViewById(R.id.showStatsbtn);
         showStatsbtn.setOnClickListener(new View.OnClickListener() {

@@ -3,6 +3,7 @@ package com.example.runningapp;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -18,6 +19,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 
@@ -26,12 +30,20 @@ import static android.content.ContentValues.TAG;
 
 public class dbHandler extends SQLiteOpenHelper {
 
+    SharedPreferences sharedpreferences;
+
+
+    private static final String PREFS_USER = "USER";
     //Remote database
     FirebaseDatabase remoteDatabase = FirebaseDatabase.getInstance();
     DatabaseReference userRef = remoteDatabase.getReference("User");
 
     User userTemp;
-    int flag = 0;
+    Context ctx;
+
+    public void setCtx(Context ctx) {
+        this.ctx = ctx;
+    }
 
     // Database Version
     private static final int DATABASE_VERSION = 1;
@@ -39,8 +51,13 @@ public class dbHandler extends SQLiteOpenHelper {
     // Database Name
     private static final String DATABASE_NAME = "RunningAppData";
 
-    // Contacts table name
+    // Table names
     private static final String TABLE_ROUTE = "route";
+    private static final String TABLE_LOG = "log";
+
+    //Log Table Columns names
+    private static final String KEY_LOG = "flag";
+    private static final String KEY_LOGUSR = "loggeduserid";
 
     // User Table Columns names
    // private static final String KEY_USID = "userID";
@@ -74,6 +91,10 @@ public class dbHandler extends SQLiteOpenHelper {
                 + KEY_RTID + " TEXT PRIMARY KEY," + KEY_USID + " TEXT ," + KEY_DIST + " TEXT,"
                 +  KEY_STRT + " TEXT," + KEY_END + " TEXT,"+ KEY_STIME + "TEXT," + KEY_DUR + "TEXT," + KEY_AVG + " TEXT)";
         db.execSQL(CREATE_ROUTE_TABLE);
+
+        String CREATE_ROUTE_LOG = "CREATE TABLE " + TABLE_LOG + "("
+                + KEY_LOG + " TEXT PRIMARY KEY," + KEY_LOGUSR + "TEXT)";
+        db.execSQL(CREATE_ROUTE_LOG);
 
         //Links the remote database
         remoteDatabase = FirebaseDatabase.getInstance();
@@ -118,18 +139,14 @@ public class dbHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-
         values.put(KEY_USID, route.getUserID());
-        //String encrypt = md5(usr.getPwd());
-        //values.put(KEY_PWD, encrypt);
         values.put(KEY_RTID , route.getRouteID());
-        values.put(KEY_USID , route.getUserID());
         values.put(KEY_DIST , route.getDistance());
-//        values.put(KEY_STRT , route.getStartpoint());
-//        values.put(KEY_END , route.getEndpoint());
-//        values.put(KEY_STIME , route.getStarting_time());
-//        values.put(KEY_DUR , route.getDuration());
         values.put(KEY_AVG , route.getAvgSpeed());
+        values.put(KEY_STIME , route.getStarting_time().toString());
+        values.put(KEY_DUR , route.getDuration().toString());
+//      values.put(KEY_STRT , route.getStartpoint());
+//      values.put(KEY_END , route.getEndpoint());
 
         long result = db.insert(TABLE_ROUTE,null,values);
 
@@ -183,8 +200,23 @@ public class dbHandler extends SQLiteOpenHelper {
                     children.add(var);
                     System.out.println("VAR  ------- "+var);
                 }
-                //userTemp.update(String.valueOf(userID),String.valueOf(children.get(7)),String.valueOf(children.get(6)),String.valueOf(children.get(0)),String.valueOf(children.get(8)),Float.parseFloat(String.valueOf(children.get(2))),Float.parseFloat(String.valueOf(children.get(1))),Float.parseFloat(String.valueOf(children.get(5))),Float.parseFloat(String.valueOf(children.get(3))),Float.parseFloat(String.valueOf(children.get(4))));
-                flag = 1;
+                userTemp.update(String.valueOf(userID),String.valueOf(children.get(7)),String.valueOf(children.get(6)),String.valueOf(children.get(0)),String.valueOf(children.get(8)),Float.parseFloat(String.valueOf(children.get(2))),Float.parseFloat(String.valueOf(children.get(1))),Float.parseFloat(String.valueOf(children.get(5))),Float.parseFloat(String.valueOf(children.get(3))),Float.parseFloat(String.valueOf(children.get(4))));
+
+                SharedPreferences settings = ctx.getSharedPreferences(PREFS_USER, 0);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putString("user_id", userTemp.getUserID());
+                editor.putString("user_pass", userTemp.getPassword_raw());
+                editor.putString("user_name", userTemp.getName());
+                editor.putString("user_surname", userTemp.getSurname());
+                editor.putString("user_email", userTemp.getEmail());
+                editor.putFloat("user_kg", userTemp.getKg());
+                editor.putFloat("user_height", userTemp.getHeight());
+                editor.putFloat("user_km_w", userTemp.getKmgoal_weekly());
+                editor.putFloat("user_km_d", userTemp.getKmgoal_daily());
+                editor.putFloat("user_km_m", userTemp.getKmgoal_monthly());
+
+                // Commit the edits
+                editor.commit();
             }
             @Override
             public void onCancelled(DatabaseError error) {
@@ -192,31 +224,24 @@ public class dbHandler extends SQLiteOpenHelper {
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
-
-        //System.out.println("User "+ userTemp);
-        //userTemp.update(String.valueOf(userID),String.valueOf(children.get(7)),String.valueOf(children.get(6)),String.valueOf(children.get(0)),String.valueOf(children.get(8)),Float.parseFloat(String.valueOf(children.get(2))),Float.parseFloat(String.valueOf(children.get(1))),Float.parseFloat(String.valueOf(children.get(5))),Float.parseFloat(String.valueOf(children.get(3))),Float.parseFloat(String.valueOf(children.get(4))));
-
-        //return userTemp;
     }
 
-//    public int findNextAvailableExpID(User user) {
-//        int nextId = 0;
-//        SQLiteDatabase db = this.getWritableDatabase();
-//
-//        Cursor cursor = db.query(TABLE_EXPENSES, new String[] {KEY_REALTIME,KEY_ID, KEY_USN ,KEY_PRICE ,KEY_CAT ,KEY_PAYMENT}, KEY_USN + "=?",
-//                new String[] { user.getUsername() }, null, null, null, null);
-//        //We count the results of the query and return the next possible id
-//        if (cursor.moveToFirst()) {
-//            while(cursor.moveToFirst()) {
-//                nextId++;
-//                cursor.moveToNext();
-//            }
-//        }
-//        cursor.close();
-//        db.close();
-//        //if it is the first element, the next id will be 0.
-//        return nextId ;
-//    }
+    public User getLoggedUser(){
+        SharedPreferences settings = ctx.getSharedPreferences(PREFS_USER, 0);
+        String user_id = settings.getString("user_id","0" );
+        String user_pass = settings.getString("user_pass","0" );
+        String user_name = settings.getString("user_name","0" );
+        String user_surname = settings.getString("user_surname","0" );
+        String user_email = settings.getString("user_email","0" );
+        Float user_kg = settings.getFloat("user_kg",0);
+        Float user_height = settings.getFloat("user_height",0);
+        Float user_km_w = settings.getFloat("user_km_w",0);
+        Float user_km_d = settings.getFloat("user_km_d",0);
+        Float user_km_m = settings.getFloat("user_km_m",0);
+
+        User usr = new User(user_id,user_pass,user_name,user_email,user_surname,user_kg,user_height,user_km_w,user_km_d,user_km_m);
+        return  usr;
+    }
 
 
 //    public void addCatThresholds(String username, double Budget) {
@@ -237,27 +262,6 @@ public class dbHandler extends SQLiteOpenHelper {
 //        }
 //        db.close(); // Closing database connection
 //    }
-
-//    //method to add a new expenses category
-//    public void addNewCategory(String username, String newCat, Double threshold) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        ContentValues values = new ContentValues();
-//        TABLE_CATEGORIES = username + "_categories";
-//        values.put(KEY_CAT, newCat);
-//        values.put(KEY_THRES, threshold);
-//        db.insert(TABLE_CATEGORIES, null, values);
-//        db.close();
-//    }
-//
-//    public void updateCategory(String username, String category, Double threshold) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        ContentValues values = new ContentValues();
-//        TABLE_CATEGORIES = username + "_categories";
-//        values.put(KEY_CAT, category);
-//        values.put(KEY_THRES, threshold);
-//        db.update(TABLE_CATEGORIES,values, KEY_CAT + " = ?",
-//                new String[]{category});
-//    }
 //
 //    public Map<String,Double> getThresholds(String username) {
 //        SQLiteDatabase db = this.getReadableDatabase();
@@ -276,34 +280,35 @@ public class dbHandler extends SQLiteOpenHelper {
 //        db.close();
 //        return thresholds;
 //    }
-//
-//    public boolean categoryExists(String username ,String cat) {
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        TABLE_CATEGORIES = username + "_categories";
-//        Cursor cursor = db.query(TABLE_CATEGORIES, new String[] {KEY_CAT, KEY_THRES}, KEY_CAT + "=?", new String[] {cat}, null, null, null);
-//        boolean result = (cursor.moveToFirst());
-//        //will return false if cursor is null
-//        cursor.close();
-//        return result;
-//    }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-  /*  public Route getRoute(String routeID) {
+    public Route getRoute(String routeID) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_ROUTE, new String[] {KEY_RTID,KEY_USID,KEY_DIST  ,
                      KEY_STRT ,KEY_END ,KEY_STIME , KEY_DUR , KEY_AVG }, KEY_USID + "=?",
                 new String[] { routeID }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
-        Route route = new Route(cursor.getString(0), cursor.getString(1),
-                Float.parseFloat(cursor.getString(2)), Float.parseFloat(cursor.getString(3)), cursor.getString(4),
-                Float.parseFloat(cursor.getString(5)), Float.parseFloat(cursor.getString(6)),
-                Point.(cursor.getString(7)));
+        Route route = null;
+        try {
+            route = new Route(cursor.getString(1),
+                    cursor.getString(0),
+                    cursor.getFloat(2),
+                    cursor.getFloat(3),
+                    new SimpleDateFormat("dd/MM/yyyy").parse(cursor.getString(4)),
+                    new SimpleDateFormat("HH:mm:ss").parse(cursor.getString(5)),
+                    cursor.getString(6),
+                    cursor.getString(7),
+                    cursor.getFloat(8)
+            );
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         cursor.close();
         return route;
 
-    }*/
+    }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     public boolean isUser(String username) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -340,30 +345,39 @@ public class dbHandler extends SQLiteOpenHelper {
                 new String[]{String.valueOf(route.getRouteID())});
     }
 
-//    public ArrayList<Expenses> getAllExpenses(User user) {
-//        ArrayList<Expenses> expList = new ArrayList<Expenses>();
-//        // Select All Query
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        //Cursor cursor = db.query(TABLE_EXPENSES, new String[] {KEY_REALTIME,KEY_USN ,KEY_PRICE ,KEY_CAT,KEY_PAYMENT}, KEY_USN + "=?",
-//        //       new String[] { user.getUsername() }, null, null, KEY_REALTIME);
-//        String cateQuery = " SELECT * FROM " + TABLE_EXPENSES + " WHERE " + KEY_USN +
-//                " = '" + user.getUsername() + "'" +" ORDER BY " + KEY_REALTIME + " DESC "  ;
-//        Cursor cursor = db.rawQuery(cateQuery,null);
-//        // looping through all rows and adding to list
-//        if (cursor.moveToFirst()) {
-//            do {
-//                Expenses exp = new Expenses(cursor.getString(1),
-//                        cursor.getInt(0),
-//                        cursor.getString(2),
-//                        cursor.getDouble(3),
-//                        cursor.getString(4),
-//                        cursor.getString(5));
-//                expList.add(exp);
-//            } while (cursor.moveToNext());
-//        }
-//        cursor.close();
-//        return expList;
-//    }
+    public ArrayList<Route> getAllRoutes(User user) {
+        ArrayList<Route> routeList = new ArrayList<Route>();
+        // Select All Query
+        SQLiteDatabase db = this.getWritableDatabase();
+        //Cursor cursor = db.query(TABLE_EXPENSES, new String[] {KEY_REALTIME,KEY_USN ,KEY_PRICE ,KEY_CAT,KEY_PAYMENT}, KEY_USN + "=?",
+        //       new String[] { user.getUsername() }, null, null, KEY_REALTIME);
+        String cateQuery = " SELECT * FROM " + TABLE_ROUTE + " WHERE " + KEY_USID +
+                " = '" + user.getUserID() + "'" ;
+        Cursor cursor = db.rawQuery(cateQuery,null);
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Route rt = null;
+                try {
+                    rt = new Route(cursor.getString(1),
+                            cursor.getString(0),
+                            cursor.getFloat(2),
+                            cursor.getFloat(3),
+                            new SimpleDateFormat("dd/MM/yyyy").parse(cursor.getString(4)),
+                            new SimpleDateFormat("HH:mm:ss").parse(cursor.getString(5)),
+                            cursor.getString(6),
+                            cursor.getString(7),
+                            cursor.getFloat(8)
+                    );
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                routeList.add(rt);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return routeList;
+    }
 
 
 //    public ArrayList<Expenses> getSortedCategory(User user, String cate){

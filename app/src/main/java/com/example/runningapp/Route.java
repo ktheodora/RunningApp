@@ -8,12 +8,12 @@ import java.util.Date;
 
 public class Route {
     private String routeID, userID;
-    private float distance, avgSpeed;
+    private float distance, avgSpeed, steps;
     private Date starting_time;
-    private Time duration;
-    private Point startpoint, endpoint;
+    private Date duration;
+    private String startpoint, endpoint;
 
-    public Route (String RouteID, String UserID, float Distance, float AvgSpeed, Date Starting_time, Time Duration, Point Startpoint, Point Endpoint) {
+    public Route (String RouteID, String UserID, float Distance, float AvgSpeed, Date Starting_time, Date Duration, String Startpoint, String Endpoint, float Steps) {
         this.userID = UserID;
         this.routeID = RouteID;
         this.avgSpeed = AvgSpeed;
@@ -22,6 +22,7 @@ public class Route {
         this.duration = Duration;
         this.startpoint = Startpoint;
         this.endpoint = Endpoint;
+        this.steps = Steps;
     }
 
     public String getRouteID() {
@@ -38,6 +39,14 @@ public class Route {
 
     public void setUserID(String userID) {
         this.userID = userID;
+    }
+
+    public float getSteps() {
+        return steps;
+    }
+
+    public void setSteps(float steps) {
+        this.steps = steps;
     }
 
     public float getDistance() {
@@ -64,27 +73,27 @@ public class Route {
         this.starting_time = starting_time;
     }
 
-    public Time getDuration() {
+    public Date getDuration() {
         return duration;
     }
 
-    public void setDuration(Time duration) {
+    public void setDuration(Date duration) {
         this.duration = duration;
     }
 
-    public Point getStartpoint() {
+    public String getStartpoint() {
         return startpoint;
     }
 
-    public void setStartpoint(Point startpoint) {
+    public void setStartpoint(String startpoint) {
         this.startpoint = startpoint;
     }
 
-    public Point getEndpoint() {
+    public String getEndpoint() {
         return endpoint;
     }
 
-    public void setEndpoint(Point endpoint) {
+    public void setEndpoint(String endpoint) {
         this.endpoint = endpoint;
     }
 }
