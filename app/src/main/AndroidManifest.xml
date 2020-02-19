@@ -13,12 +13,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".signup"/>
+        <activity android:name=".login"/>
         <activity android:name=".routeDetails"/>
         <activity android:name=".routeList"/>
         <activity android:name=".settings"/>
         <activity android:name=".statistics"/>
-        <activity android:name=".homepage">
+        <activity android:name=".homepage"/>
+        <activity android:name=".signup">
         <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

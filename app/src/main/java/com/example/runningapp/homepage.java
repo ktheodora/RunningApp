@@ -69,8 +69,8 @@ public class homepage extends AppCompatActivity {
 
         city = (TextView) findViewById(R.id.city);
         degrees = findViewById(R.id.degrees);
-        rateView = findViewById(R.id.ratetview);
-        clothesView = findViewById(R.id.clothesview);
+        rateView = findViewById(R.id.humidity);
+        clothesView = findViewById(R.id.outfit);
 
         mQueue = Volley.newRequestQueue(this);
 

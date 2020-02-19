@@ -178,7 +178,7 @@
                     app:srcCompat="@drawable/mail" />
 
                 <EditText
-                    android:id="@+id/entEmail"
+                    android:id="@+id/EmailField"
                     android:layout_width="320dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
@@ -207,7 +207,7 @@
                     app:srcCompat="@drawable/pass" />
 
                 <EditText
-                    android:id="@+id/etPassword"
+                    android:id="@+id/PwField"
                     android:layout_width="320dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
@@ -219,7 +219,7 @@
 
             </LinearLayout>
         <Button
-            android:id="@+id/login"
+            android:id="@+id/loginBtn"
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
