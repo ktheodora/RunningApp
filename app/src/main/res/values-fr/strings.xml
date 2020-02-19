@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="menulink_sets">Parametres</string>
+    <string name="menulink_home">Home</string>
+    <string name="welcomeback_msg">Bienvenue</string>
+    <string name="action_sign_in">Se connecter</string>
+    <string name="backtomain">Retour</string>
+    <string name="PasswordField">Mot de Passe</string>
+    <string name="menulink_logout">Se deconnecter</string>
+    <string name="menulink_stats">Statistiques</string>
+    <string name="UsernameField">Nom d\' utilisateur</string>
+</resources>

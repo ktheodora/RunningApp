@@ -1,6 +1,68 @@
 <resources>
-    <string name="appname">The Running App</string>
+    <string name="appname" translatable="false">The Running App</string>
 
     <string name="action_sign_in">Log In</string>
     <string name="backtomain">Back</string>
+
+    <!--menu values-->
+    <string name="menulink_home">Home</string>
+    <string name="menulink_stats">Statistics</string>
+    <string name="menulink_routes">Routes</string>
+    <string name="menulink_sets">Settings</string>
+    <string name="menulink_logout">Logout</string>
+    <!--login values-->
+    <string name="welcomeback_msg">Welcome Back</string>
+    <string name="UsernameField">Username</string>
+    <string name="PasswordField">Password</string>
+    <string name="signuplabel">User Sign-Up</string>
+    <string name="loginname_text">Name</string>
+    <string name="loginsurname_text">Surname</string>
+    <string name="entEmail" translatable="false">Email</string>
+    <string name="PasswordSignup">Password(Minimum 6-digit)</string>
+
+    <!--homepage values-->
+
+    <string name="startbtn">Start Running</string>
+    <string name="stopbtn">Stop</string>
+    <string name="todaylabel">Today\'s Running Conditions</string>
+    <string name="humiditylabel">Humidity</string>
+    <string name="outfitlabel">Rec. Outfit</string>
+    <string name="showStatsbtn">Show Statistics</string>
+    <string name="routesbtn">All routes</string>
+
+    <!--statistics values-->
+
+    <string name="statstitle">My Statistics</string>
+    <string name="selectDateLabel">Select Date</string>
+    <string name="selectDate1hint">From Date</string>
+    <string name="selectDate2hint">To Date</string>
+    <string name="showbtn">Show</string>
+    <string name="avgspeedlabel">Average Speed</string>
+    <string name="avgstepslabel">Average Steps per run</string>
+    <string name="calories">Total kcal loss for selected period</string>
+    <string name="graphlabel1">Km run per day</string>
+    <string name="graphlabel2">Calories Loss per day</string>
+    <string name="graphlabel3"> % Achieved km goal</string>
+
+    <!--settings values-->
+
+    <string name="settingsTitle1">App Settings</string>
+    <string name="settingskilos_tag">Current Weight (Kg)</string>
+    <string name="settingstargetd_tag">Daily Target (Km)</string>
+    <string name="settingstargetw_tag">Weekly Target (Km)</string>
+    <string name="settingstargetm_tag">Monthly Target (Km)</string>
+    <string name="settingslang_tag">Language</string>
+    <string name="settingsTitle2">Account Settings</string>
+    <string name="saveBtn">Save</string>
+
+    <!--route list values-->
+    <string name="routestitle">All Routes</string>
+
+    <!--row values-->
+    <string name="rowdate_tag">Date: </string>
+    <string name="rowtime_tag">Starting Time: </string>
+    <string name="rowdur_tag">Duration: </string>
+    <string name="rowloc_tag">Location: </string>
+
+
 </resources>

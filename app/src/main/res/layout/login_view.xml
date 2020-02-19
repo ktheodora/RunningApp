@@ -64,12 +64,12 @@
 
 
             <TextView
-                android:id="@+id/signuplabel"
+                android:id="@+id/welcomeback_msg"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:layout_marginTop="50dp"
-                android:text="@string/signuplabel"
+                android:layout_marginTop="100dp"
+                android:text="@string/welcomeback_msg"
                 android:fontFamily="sans-serif"
                 android:scaleType="center"
                 android:layout_width="wrap_content"
@@ -78,66 +78,10 @@
 
 
             <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal"
-            android:layout_marginTop="40dp">
-
-            <ImageView
-                android:id="@+id/loginnameicon"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="30dp"
-                android:layout_weight="1"
-                android:scaleType="fitStart"
-                app:srcCompat="@drawable/name" />
-
-            <EditText
-                android:id="@+id/loginname_text"
-                android:layout_width="320dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:ems="10"
-                android:hint="@string/loginname_text"
-                android:inputType="textPersonName"
-                android:textSize="20sp"
-                />
-
-        </LinearLayout>
-            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:orientation="horizontal"
-                android:layout_marginTop="10dp">
-
-                <ImageView
-                    android:id="@+id/loginsurnameicon"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="30dp"
-                    android:layout_weight="1"
-                    android:scaleType="fitStart"
-                    app:srcCompat="@drawable/name" />
-
-                <EditText
-                    android:id="@+id/loginsurname_text"
-                    android:layout_width="320dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="20dp"
-                    android:ems="10"
-                    android:hint="@string/loginsurname_text"
-                    android:inputType="textPersonName"
-                    android:textSize="20sp"
-                    />
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="40dp">
 
                 <ImageView
                     android:id="@+id/usrnameicon"
@@ -161,34 +105,6 @@
                     />
 
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp">
-
-                <ImageView
-                    android:id="@+id/mailicon"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="30dp"
-                    android:layout_weight="1"
-                    android:scaleType="fitStart"
-                    app:srcCompat="@drawable/mail" />
-
-                <EditText
-                    android:id="@+id/entEmail"
-                    android:layout_width="320dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="20dp"
-                    android:ems="10"
-                    android:hint="@string/entEmail"
-                    android:inputType="textEmailAddress"
-                    android:textSize="20sp"
-                    />
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -207,30 +123,30 @@
                     app:srcCompat="@drawable/pass" />
 
                 <EditText
-                    android:id="@+id/etPassword"
+                    android:id="@+id/PasswordField"
                     android:layout_width="320dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
                     android:ems="10"
-                    android:hint="@string/PasswordSignup"
+                    android:hint="@string/PasswordField"
                     android:inputType="textPassword"
                     android:textSize="20sp"
                     />
 
             </LinearLayout>
-        <Button
-            android:id="@+id/login"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="40dp"
-            android:text="@string/action_sign_in"
-            android:background="#90A4AE"
-            android:textColor="#ffffff"
-            android:textSize="15sp"
-            />
+            <Button
+                android:id="@+id/loginfield"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp"
+                android:text="@string/action_sign_in"
+                android:background="#90A4AE"
+                android:textColor="#ffffff"
+                android:textSize="15sp"
+                />
 
-    </LinearLayout>
+        </LinearLayout>
 
-</ScrollView>
+    </ScrollView>
 </android.support.v4.widget.DrawerLayout>

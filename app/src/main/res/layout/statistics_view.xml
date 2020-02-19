@@ -64,12 +64,12 @@
 
 
             <TextView
-                android:id="@+id/HomePage"
+                android:id="@+id/statstitle"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:layout_marginTop="10dp"
-                android:text="My Statistics"
+                android:text="@string/statstitle"
                 android:textColor="#3389FF"
                 android:fontFamily="cursive"
                 android:scaleType="center"
@@ -103,7 +103,7 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="8dp"
                     android:layout_weight="1"
-                    android:text="Select Date"
+                    android:text="@string/selectDateLabel"
 
                     android:textSize="20sp" />
 
@@ -114,7 +114,7 @@
                     android:layout_gravity="center"
                     android:clickable="true"
                     android:focusable="false"
-                    android:hint="From Date"
+                    android:hint="@string/selectDate1hint"
 
                     android:textSize="20sp" />
 
@@ -127,7 +127,7 @@
                     android:layout_marginRight="8dp"
                     android:clickable="true"
                     android:focusable="false"
-                    android:hint=" To Date "
+                    android:hint="@string/selectDate2hint"
                     android:textSize="20sp" />
 
             </LinearLayout>
@@ -140,11 +140,11 @@
                 android:background="#F5F5F5">
 
                 <Button
-                    android:id="@+id/startStopbtn"
+                    android:id="@+id/showbtn"
                     android:layout_width="130dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
-                    android:text="Show"
+                    android:text="@string/showbtn"
                     android:gravity="center"
                     android:textColor="#ffffff"
                     android:textSize="15sp"
@@ -168,14 +168,16 @@
                     app:srcCompat="@drawable/speed" />
 
                 <TextView
-                    android:id="@+id/avgspeed"
+                    android:id="@+id/avgspeedlabel"
                     android:layout_width="190dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Average Speed"
+                    android:text="@string/avgspeedlabel"
                     android:textColor="#000000"
                     android:textSize="20sp"
                     />
+
+                <!-- Changing dynamically always so no need for @string value-->
 
                 <TextView
                     android:id="@+id/avgspeedview"
@@ -208,14 +210,16 @@
                     app:srcCompat="@drawable/steps" />
 
                 <TextView
-                    android:id="@+id/avgsteps"
+                    android:id="@+id/avgstepslabel"
                     android:layout_width="190dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Average Steps per run"
+                    android:text="@string/avgstepslabel"
                     android:textColor="#000000"
                     android:textSize="20sp"
                     />
+
+                <!-- Changing dynamically always so no need for @string value-->
 
                 <TextView
                     android:id="@+id/avgstepsview"
@@ -252,10 +256,12 @@
                     android:layout_width="190dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Total kcal loss for selected period"
+                    android:text="@string/calories"
                     android:textColor="#000000"
                     android:textSize="20sp"
                     />
+
+                <!-- Changing dynamically always so no need for @string value-->
 
                 <TextView
                     android:id="@+id/kcal"
@@ -278,7 +284,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:text="Km run per day"
+                android:text="@string/graphlabel1"
                 android:textSize="20sp" />
 
             <com.github.mikephil.charting.charts.LineChart
@@ -295,7 +301,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:text="Calories Loss per day"
+                android:text="@string/graphlabel2"
                 android:textSize="20sp" />
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/caloriesChart"
@@ -313,7 +319,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:text=" % Achieved km goal"
+                android:text="@string/graphlabel3"
                 android:textSize="20sp" />
             <lecho.lib.hellocharts.view.PieChartView
                 android:id="@+id/goalChart"

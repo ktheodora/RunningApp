@@ -69,7 +69,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:layout_marginTop="10dp"
-                android:text="App Settings"
+                android:text="@string/settingsTitle1"
                 android:textColor="#3389FF"
                 android:fontFamily="cursive"
                 android:scaleType="center"
@@ -97,10 +97,12 @@
                     android:layout_width="190dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Current Weight (Kg)"
+                    android:text="@string/settingskilos_tag"
                     android:textColor="#000000"
                     android:textSize="20sp"
                     />
+
+                <!-- Changing dynamically always so no need for @string value-->
 
                 <EditText
                     android:id="@+id/settingskilos_text"
@@ -111,8 +113,8 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:inputType="numberDecimal"
-                    android:text="40"
-                    android:textColor="#3389FF"
+                    android:hint="40"
+                    android:textColorHint="#3389FF"
                     android:textSize="20sp" />
 
 
@@ -138,12 +140,14 @@
                 android:layout_width="190dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Daily Target (Km)"
+                android:text="@string/settingstargetd_tag"
                 android:textColor="#000000"
                 android:textSize="20sp"
                 />
 
-            <EditText
+                <!-- Changing dynamically always so no need for @string value-->
+
+                <EditText
                 android:id="@+id/settingstargetd_text"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
@@ -152,8 +156,8 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:inputType="numberDecimal"
-                android:text="40"
-                android:textColor="#3389FF"
+                android:hint="40"
+                android:textColorHint="#3389FF"
                 android:textSize="20sp" />
 
 
@@ -179,10 +183,12 @@
                     android:layout_width="190dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Weekly Target (Km)"
+                    android:text="@string/settingstargetw_tag"
                     android:textColor="#000000"
                     android:textSize="20sp"
                     />
+
+                <!-- Changing dynamically always so no need for @string value-->
 
                 <EditText
                     android:id="@+id/settingstargetw_text"
@@ -193,8 +199,8 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:inputType="numberDecimal"
-                    android:text="40"
-                    android:textColor="#3389FF"
+                    android:hint="40"
+                    android:textColorHint="#3389FF"
                     android:textSize="20sp" />
 
 
@@ -220,10 +226,12 @@
                     android:layout_width="190dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Monthly Target (Km)"
+                    android:text="@string/settingstargetm_tag"
                     android:textColor="#000000"
                     android:textSize="20sp"
                     />
+
+                <!-- Changing dynamically always so no need for @string value-->
 
                 <EditText
                     android:id="@+id/settingstargetm_text"
@@ -234,47 +242,13 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:inputType="numberDecimal"
-                    android:text="40"
-                    android:textColor="#3389FF"
+                    android:hint="40"
+                    android:textColorHint="#3389FF"
                     android:textSize="20sp" />
 
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal"
-                android:background="#F5F5F5">
-
-                <ImageView
-                    android:id="@+id/weathericon"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"
-                    app:srcCompat="@drawable/weather" />
-
-                <TextView
-                    android:id="@+id/settingsdegress_tag"
-                    android:layout_width="190dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Degrees Display"
-                    android:textColor="#000000"
-                    android:textSize="20sp"
-                    />
-
-                <Spinner
-                    android:id="@+id/settingsdegrees_text"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    />
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -296,7 +270,7 @@
                     android:layout_width="190dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Language"
+                    android:text="@string/settingslang_tag"
                     android:textColor="#000000"
                     android:textSize="20sp"
                     />
@@ -317,7 +291,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:layout_marginTop="10dp"
-                android:text="Account Settings"
+                android:text="@string/settingsTitle2"
                 android:textColor="#3389FF"
                 android:fontFamily="cursive"
                 android:scaleType="center"
@@ -348,7 +322,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
                     android:ems="10"
-                    android:hint="Username"
+                    android:hint="@string/UsernameField"
                     android:inputType="textPersonName"
                     android:textSize="20sp"
                     />
@@ -376,7 +350,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
                     android:ems="10"
-                    android:hint="Email"
+                    android:hint="@string/entEmail"
                     android:inputType="textEmailAddress"
                     android:textSize="20sp"
                     />
@@ -404,7 +378,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
                     android:ems="10"
-                    android:hint="Password(Minimum 6-digit)"
+                    android:hint="@string/PasswordSignup"
                     android:inputType="textPassword"
                     android:textSize="20sp"
                     />
@@ -419,11 +393,11 @@
                 android:background="#F5F5F5">
 
                 <Button
-                    android:id="@+id/startStopbtn"
+                    android:id="@+id/saveBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
-                    android:text="save"
+                    android:text="@string/saveBtn"
                     android:gravity="center"
                     android:textColor="#ffffff"
                     android:textSize="15sp"
@@ -438,7 +412,7 @@
                 android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:text="Back"
+                android:text="@string/backtomain"
                 android:background="#90A4AE"
                 android:textColor="#ffffff"
                 android:textSize="15sp" />
