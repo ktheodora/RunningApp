@@ -79,6 +79,8 @@ public class dbHandler extends SQLiteOpenHelper {
     private static final String KEY_STIME = "startingtime";
     private static final String KEY_DUR = "duration";
     private static final String KEY_AVG= "averagespeed";
+    private static final String KEY_STEPS= "steps";
+
 
 
     public dbHandler(Context context) {
@@ -89,7 +91,7 @@ public class dbHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_ROUTE_TABLE = "CREATE TABLE " + TABLE_ROUTE + "("
                 + KEY_RTID + " TEXT PRIMARY KEY," + KEY_USID + " TEXT ," + KEY_DIST + " TEXT,"
-                +  KEY_STRT + " TEXT," + KEY_END + " TEXT,"+ KEY_STIME + "TEXT," + KEY_DUR + "TEXT," + KEY_AVG + " TEXT)";
+                +  KEY_STRT + " TEXT," + KEY_END + " TEXT,"+ KEY_STIME + "TEXT," + KEY_DUR + "TEXT," + KEY_AVG + " TEXT," + KEY_STEPS + "TEXT)";
         db.execSQL(CREATE_ROUTE_TABLE);
 
         String CREATE_ROUTE_LOG = "CREATE TABLE " + TABLE_LOG + "("
@@ -145,8 +147,9 @@ public class dbHandler extends SQLiteOpenHelper {
         values.put(KEY_AVG , route.getAvgSpeed());
         values.put(KEY_STIME , route.getStarting_time().toString());
         values.put(KEY_DUR , route.getDuration().toString());
-//      values.put(KEY_STRT , route.getStartpoint());
-//      values.put(KEY_END , route.getEndpoint());
+        values.put(KEY_STRT , route.getStartpoint());
+        values.put(KEY_END , route.getEndpoint());
+        values.put(KEY_STEPS, route.getSteps());
 
         long result = db.insert(TABLE_ROUTE,null,values);
 
@@ -244,44 +247,6 @@ public class dbHandler extends SQLiteOpenHelper {
     }
 
 
-//    public void addCatThresholds(String username, double Budget) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        TABLE_CATEGORIES = username + "_categories";
-//        String CREATE_CATEGORIES_TABLE = "CREATE TABLE " + TABLE_CATEGORIES + "("
-//                + KEY_CAT + " TEXT," + KEY_THRES + " REAL )";
-//        db.execSQL(CREATE_CATEGORIES_TABLE);
-//        ContentValues values = new ContentValues();
-//        //then moving on to the addition of the thresholds
-//        String[] categs = new String[] {"Leisure","Food","Services","Health","Miscellaneous"};
-//        //default threshold can change later
-//        double default_thres = Budget / categs.length;
-//        for ( String cat: categs) {
-//            values.put(KEY_CAT, cat);
-//            values.put(KEY_THRES, default_thres);
-//            db.insert(TABLE_CATEGORIES, null, values);
-//        }
-//        db.close(); // Closing database connection
-//    }
-//
-//    public Map<String,Double> getThresholds(String username) {
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        Map<String, Double> thresholds = new HashMap<String, Double>();
-//        TABLE_CATEGORIES = username + "_categories";
-//        Cursor cursor = db.query(TABLE_CATEGORIES, new String[] {KEY_CAT, KEY_THRES}, null, null, null, null, null);
-//        if (cursor != null) {
-//            cursor.moveToFirst();
-//            while(!cursor.isAfterLast()) {
-//                //if for the specific category we have set a value
-//                thresholds.put(cursor.getString(0), cursor.getDouble(1));
-//                cursor.moveToNext();
-//            }
-//        }
-//        cursor.close();
-//        db.close();
-//        return thresholds;
-//    }
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////
     public Route getRoute(String routeID) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_ROUTE, new String[] {KEY_RTID,KEY_USID,KEY_DIST  ,
@@ -309,7 +274,7 @@ public class dbHandler extends SQLiteOpenHelper {
         return route;
 
     }
-///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     public boolean isUser(String username) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_ROUTE, new String[] {KEY_RTID,KEY_USID,KEY_DIST  ,
@@ -333,11 +298,12 @@ public class dbHandler extends SQLiteOpenHelper {
         values.put(KEY_RTID , route.getRouteID());
         values.put(KEY_USID , route.getUserID());
         values.put(KEY_DIST , route.getDistance());
-//        values.put(KEY_STRT , route.getStartpoint());
-//        values.put(KEY_END , route.getEndpoint());
-//        values.put(KEY_STIME , route.getStarting_time());
-//        values.put(KEY_DUR , route.getDuration());
+        values.put(KEY_STRT , route.getStartpoint());
+        values.put(KEY_END , route.getEndpoint());
+        values.put(KEY_STIME , route.getStarting_time().toString());
+        values.put(KEY_DUR , route.getDuration().toString());
         values.put(KEY_AVG , route.getAvgSpeed());
+        values.put(KEY_STEPS, route.getSteps());
 
 
 // updating row
@@ -378,31 +344,4 @@ public class dbHandler extends SQLiteOpenHelper {
         cursor.close();
         return routeList;
     }
-
-
-//    public ArrayList<Expenses> getSortedCategory(User user, String cate){
-//        ArrayList<Expenses> categoryList = new ArrayList<Expenses>();
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        String cateQuery = " SELECT * FROM " + TABLE_EXPENSES + " WHERE " + KEY_USN +
-//                " = '" + user.getUsername() + "'" +" AND " + KEY_CAT + " = '"
-//                + cate + "' ORDER BY " + KEY_REALTIME + " DESC "   ;
-//        Cursor cursor = db.rawQuery(cateQuery,null);
-//
-//
-//        if (cursor.moveToFirst()) {
-//            do {
-//                // Expenses exp = new Expenses(cursor.getString(0),cursor.getString(1),cursor.getString(2),Double.parseDouble(cursor.getString(3)), cursor.getString(4),cursor.getString(5));
-//                Expenses exp = new Expenses(cursor.getString(1),
-//                        cursor.getInt(0),
-//                        cursor.getString(2),
-//                        cursor.getDouble(3),
-//                        cursor.getString(4),
-//                        cursor.getString(5));
-//                categoryList.add(exp);
-//            } while (cursor.moveToNext());
-//        }
-//        cursor.close();
-//        return categoryList;
-//    }
-
 }
