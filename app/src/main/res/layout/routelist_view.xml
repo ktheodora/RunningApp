@@ -64,12 +64,12 @@
 
 
             <TextView
-                android:id="@+id/HomePage"
+                android:id="@+id/routestitle"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:layout_marginTop="10dp"
-                android:text="All Routes"
+                android:text="@string/routestitle"
                 android:textColor="#3389FF"
                 android:fontFamily="cursive"
                 android:scaleType="center"
@@ -103,23 +103,23 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="8dp"
                     android:layout_weight="1"
-                    android:text="Select Date"
+                    android:text="@string/selectDateLabel"
 
                     android:textSize="20sp" />
 
                 <EditText
-                    android:id="@+id/selectDate1"
+                    android:id="@+id/selectDate11"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:clickable="true"
                     android:focusable="false"
-                    android:hint="From Date"
+                    android:hint="@string/selectDate1hint"
 
                     android:textSize="20sp" />
 
                 <EditText
-                    android:id="@+id/selectDate2"
+                    android:id="@+id/selectDate22"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -127,7 +127,7 @@
                     android:layout_marginRight="8dp"
                     android:clickable="true"
                     android:focusable="false"
-                    android:hint=" To Date "
+                    android:hint="@string/selectDate2hint"
                     android:textSize="20sp" />
 
             </LinearLayout>
@@ -140,18 +140,17 @@
                 android:background="#F5F5F5">
 
                 <Button
-                    android:id="@+id/startStopbtn"
+                    android:id="@+id/showBtn"
                     android:layout_width="130dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
-                    android:text="Show"
+                    android:text="@string/showbtn"
                     android:gravity="center"
                     android:textColor="#ffffff"
                     android:textSize="15sp"
                     android:background="#90A4AE"/>
 
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -185,7 +184,7 @@
                 android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:text="Back"
+                android:text="@string/backtomain"
                 android:background="#90A4AE"
                 android:textColor="#ffffff"
                 android:textSize="15sp" />

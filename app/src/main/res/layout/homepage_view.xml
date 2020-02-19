@@ -63,7 +63,6 @@
             </LinearLayout>
 
 
-
             <TextView
                 android:id="@+id/speedTextView"
                 android:layout_width="wrap_content"
@@ -90,7 +89,7 @@
                     android:layout_width="130dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
-                    android:text="Start running"
+                    android:text="@string/startbtn"
                     android:gravity="center"
                     android:textColor="#ffffff"
                     android:textSize="15sp"
@@ -100,11 +99,11 @@
 
 
             <TextView
-                android:id="@+id/HomePage"
+                android:id="@+id/todaylabel"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="Today's Running Conditions"
+                android:text="@string/todaylabel"
                 android:layout_marginTop="20dp"
                 android:textColor="#3389FF"
                 android:fontFamily="cursive"
@@ -128,15 +127,18 @@
                     android:layout_gravity="center"
                     app:srcCompat="@drawable/weather" />
 
+                <!-- Changing dynamically always so no need for @string value-->
                 <TextView
                     android:id="@+id/city"
                     android:layout_width="190dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="City Name"
+                    android:text="city name"
                     android:textColor="#000000"
                     android:textSize="20sp"
                     />
+
+                <!-- Changing dynamically always so no need for @string value-->
 
                 <TextView
                     android:id="@+id/degrees"
@@ -169,17 +171,19 @@
                     app:srcCompat="@drawable/humidity" />
 
                 <TextView
-                    android:id="@+id/rate"
+                    android:id="@+id/humiditylabel"
                     android:layout_width="190dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Humidity"
+                    android:text="@string/humiditylabel"
                     android:textColor="#000000"
                     android:textSize="20sp"
                     />
 
+                <!-- Changing dynamically always so no need for @string value-->
+
                 <TextView
-                    android:id="@+id/ratetview"
+                    android:id="@+id/humidity"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -209,17 +213,19 @@
                     app:srcCompat="@drawable/tshirt" />
 
                 <TextView
-                    android:id="@+id/budget"
+                    android:id="@+id/outfitlabel"
                     android:layout_width="190dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Rec. Outfit"
+                    android:text="@string/outfitlabel"
                     android:textColor="#000000"
                     android:textSize="20sp"
                     />
 
+                <!-- Changing dynamically always so no need for @string value-->
+
                 <TextView
-                    android:id="@+id/clothesview"
+                    android:id="@+id/outfit"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -246,7 +252,7 @@
                     android:layout_width="130dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
-                    android:text="Show Statistics"
+                    android:text="@string/showStatsbtn"
                     android:background="#90A4AE"
                     android:textColor="#ffffff"
                     android:textSize="15sp" />
@@ -258,7 +264,7 @@
                     android:background="#90A4AE"
                     android:textColor="#ffffff"
                     android:layout_marginLeft="8dp"
-                    android:text="All routes"
+                    android:text="@string/routesbtn"
                     android:textSize="15sp" />
             </LinearLayout>
 
