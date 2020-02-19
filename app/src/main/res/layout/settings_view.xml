@@ -1,6 +1,449 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.runningapp.routeList">
 
-</LinearLayout>
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@drawable/wallnewer"
+                android:orientation="horizontal"
+                android:textAlignment="center">
+
+                <ImageButton
+
+                    android:id="@+id/menuLines"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:background="#00000000"
+                    android:layout_marginLeft="8dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/menu7" />
+
+                <TextView
+                    android:id="@+id/editText"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:text="@string/appname"
+                    android:fontFamily="cursive"
+                    android:scaleType="center"
+                    android:layout_width="wrap_content"
+                    android:textColor="#ffffff"
+                    android:textAlignment="center"
+                    android:textSize="40sp" />
+
+                <ImageButton
+                    android:id="@+id/imageButton"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="8dp"
+                    android:background="#00000000"
+                    android:scaleType="fitStart"
+                    app:srcCompat="@drawable/logo" />
+
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/settingsTitle1"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:layout_marginTop="10dp"
+                android:text="App Settings"
+                android:textColor="#3389FF"
+                android:fontFamily="cursive"
+                android:scaleType="center"
+                android:layout_width="wrap_content"
+                android:textAlignment="center"
+                android:textSize="30sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:background="#F5F5F5">
+
+                <ImageView
+                    android:id="@+id/kilosicon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/kilos" />
+
+                <TextView
+                    android:id="@+id/settingskilos_tag"
+                    android:layout_width="190dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Current Weight (Kg)"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    />
+
+                <EditText
+                    android:id="@+id/settingskilos_text"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="numberDecimal"
+                    android:text="40"
+                    android:textColor="#3389FF"
+                    android:textSize="20sp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:background="#F5F5F5">
+
+            <ImageView
+                android:id="@+id/targeticon1"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/target" />
+
+            <TextView
+                android:id="@+id/settingstargetd_tag"
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Daily Target (Km)"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                />
+
+            <EditText
+                android:id="@+id/settingstargetd_text"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="numberDecimal"
+                android:text="40"
+                android:textColor="#3389FF"
+                android:textSize="20sp" />
+
+
+        </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:background="#F5F5F5">
+
+                <ImageView
+                    android:id="@+id/targeticon2"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/target" />
+
+                <TextView
+                    android:id="@+id/settingstargetw_tag"
+                    android:layout_width="190dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Weekly Target (Km)"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    />
+
+                <EditText
+                    android:id="@+id/settingstargetw_text"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="numberDecimal"
+                    android:text="40"
+                    android:textColor="#3389FF"
+                    android:textSize="20sp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:background="#F5F5F5">
+
+                <ImageView
+                    android:id="@+id/targeticon3"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/target" />
+
+                <TextView
+                    android:id="@+id/settingstargetm_tag"
+                    android:layout_width="190dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Monthly Target (Km)"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    />
+
+                <EditText
+                    android:id="@+id/settingstargetm_text"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="numberDecimal"
+                    android:text="40"
+                    android:textColor="#3389FF"
+                    android:textSize="20sp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:background="#F5F5F5">
+
+                <ImageView
+                    android:id="@+id/weathericon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/weather" />
+
+                <TextView
+                    android:id="@+id/settingsdegress_tag"
+                    android:layout_width="190dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Degrees Display"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    />
+
+                <Spinner
+                    android:id="@+id/settingsdegrees_text"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:background="#F5F5F5">
+
+                <ImageView
+                    android:id="@+id/langicon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/language" />
+
+                <TextView
+                    android:id="@+id/settingslang_tag"
+                    android:layout_width="190dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Language"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    />
+
+                <Spinner
+                    android:id="@+id/settingslang_text"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/settingsTitle2"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:layout_marginTop="10dp"
+                android:text="Account Settings"
+                android:textColor="#3389FF"
+                android:fontFamily="cursive"
+                android:scaleType="center"
+                android:layout_width="wrap_content"
+                android:textAlignment="center"
+                android:textSize="30sp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:id="@+id/usrnameicon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="30dp"
+                    android:layout_weight="1"
+                    android:scaleType="fitStart"
+                    app:srcCompat="@drawable/name" />
+
+                <EditText
+                    android:id="@+id/etUsname"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:ems="10"
+                    android:hint="Username"
+                    android:inputType="textPersonName"
+                    android:textSize="20sp"
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:id="@+id/mailicon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="30dp"
+                    android:layout_weight="1"
+                    android:scaleType="fitStart"
+                    app:srcCompat="@drawable/mail" />
+
+                <EditText
+                    android:id="@+id/entEmail"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:ems="10"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"
+                    android:textSize="20sp"
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:id="@+id/pass"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="30dp"
+                    android:layout_weight="1"
+                    android:scaleType="fitStart"
+                    app:srcCompat="@drawable/pass" />
+
+                <EditText
+                    android:id="@+id/etPassword"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:ems="10"
+                    android:hint="Password(Minimum 6-digit)"
+                    android:inputType="textPassword"
+                    android:textSize="20sp"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical"
+                android:background="#F5F5F5">
+
+                <Button
+                    android:id="@+id/startStopbtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:text="save"
+                    android:gravity="center"
+                    android:textColor="#ffffff"
+                    android:textSize="15sp"
+                    android:background="#90A4AE"/>
+
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/backBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:text="Back"
+                android:background="#90A4AE"
+                android:textColor="#ffffff"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+    </ScrollView>
+
+</android.support.v4.widget.DrawerLayout>
