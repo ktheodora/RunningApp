@@ -7,16 +7,16 @@ import java.util.List;
 public class User {
 
     private String userID, name, surname, password_raw, email;
-    private float kg, height, kmgoal_weekly, kmgoal_daily, kmgoal_monthly;
+    private float kg, weight, kmgoal_weekly, kmgoal_daily, kmgoal_monthly;
 
-    public User (String UserID,String Password_raw, String Name, String Email,String Surname, float Kg, float Height,float Km_W, float Km_D, float Km_M) {
+    public User (String UserID,String Password_raw, String Name, String Email,String Surname, float Kg, float Weight,float Km_W, float Km_D, float Km_M) {
         this.userID = UserID;
         this.password_raw = Password_raw;
         this.name = Name;
         this.surname = Surname;
         this.email = Email;
         this.kg = Kg;
-        this.height = Height;
+        this.weight = Weight;
         this.kmgoal_weekly = Km_W;
         this.kmgoal_daily= Km_D;
         this.kmgoal_monthly = Km_M;
@@ -24,14 +24,14 @@ public class User {
 
     public User(){}
 
-    public void update(String UserID,String Password_raw, String Name, String Email,String Surname, float Kg, float Height,float Km_W, float Km_D, float Km_M) {
+    public void update(String UserID,String Password_raw, String Name, String Email,String Surname, float Kg, float Weight,float Km_W, float Km_D, float Km_M) {
         this.userID = UserID;
         this.password_raw = Password_raw;
         this.name = Name;
         this.surname = Surname;
         this.email = Email;
         this.kg = Kg;
-        this.height = Height;
+        this.weight = Weight;
         this.kmgoal_weekly = Km_W;
         this.kmgoal_daily= Km_D;
         this.kmgoal_monthly = Km_M;
@@ -40,7 +40,7 @@ public class User {
     @NonNull
     @Override
     public String toString() {
-        return userID + " " + password_raw + " " + name + " " + surname + " " + email + " " + kg + " " + height + " " + kmgoal_daily + " " + kmgoal_monthly + " " + kmgoal_weekly + " " ;
+        return userID + " " + password_raw + " " + name + " " + surname + " " + email + " " + kg + " " + weight + " " + kmgoal_daily + " " + kmgoal_monthly + " " + kmgoal_weekly + " " ;
     }
 
     public void setUserID(String Username) {
@@ -85,12 +85,12 @@ public class User {
         this.kg = kg;
     }
 
-    public float getHeight() {
-        return height;
+    public float getWeight() {
+        return weight;
     }
 
-    public void setHeight(float height) {
-        this.height = height;
+    public void setWeight(float weight) {
+        this.weight = weight;
     }
 
     public float getKmgoal_weekly() {

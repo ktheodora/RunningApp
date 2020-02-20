@@ -24,17 +24,6 @@
                 android:orientation="horizontal"
                 android:textAlignment="center">
 
-                <ImageButton
-
-                    android:id="@+id/menuLines"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:adjustViewBounds="true"
-                    android:background="#00000000"
-                    android:layout_marginLeft="8dp"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/menu7" />
 
                 <TextView
                     android:id="@+id/editText"
@@ -141,6 +130,17 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="40dp"
                 android:text="@string/action_sign_in"
+                android:background="#90A4AE"
+                android:textColor="#ffffff"
+                android:textSize="15sp"
+                />
+            <Button
+                android:id="@+id/signBtn"
+                android:layout_width="130dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:text="@string/createacc"
                 android:background="#90A4AE"
                 android:textColor="#ffffff"
                 android:textSize="15sp"

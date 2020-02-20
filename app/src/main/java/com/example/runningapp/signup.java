@@ -1,6 +1,7 @@
 package com.example.runningapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -10,18 +11,20 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
 public class signup extends AppCompatActivity {
 
     dbHandler peopleDB;
-    private Button finish;
+    private Button finish, loginBtn;
     private EditText UserName;
     private EditText Name;
     private EditText Surname;
     private  EditText EmailAdress;
     private EditText Password;
+    SharedPreferences sharedpreferences;
 
     private Map<String, Double> defThres;
 
@@ -46,6 +49,16 @@ public class signup extends AppCompatActivity {
             }
         });
 
+        loginBtn.setOnClickListener( new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(signup.this,
+                        login.class);
+                startActivity(myIntent);
+
+            }
+        });
     }
 
     private void routed(){
@@ -60,8 +73,8 @@ public class signup extends AppCompatActivity {
 
         Surname   = (EditText)findViewById(R.id.loginsurname_text);
 
-        finish=(Button)findViewById(R.id.loginBtn);
-
+        finish=(Button)findViewById(R.id.signBtn);
+        loginBtn = (Button)findViewById(R.id.loginBtn);
     }
 
     public void addData(){
@@ -85,10 +98,24 @@ public class signup extends AppCompatActivity {
                 Intent myIntent = new Intent(signup.this,
                         settings.class);
                 Bundle b = new Bundle();
-                b.putString("username", username);
+                //storing logged in user
+                peopleDB.getUser(username);
+
                 //for displaying welcome alert on the screen
                 b.putBoolean("createAccount", true);
                 myIntent.putExtras(b); //Put your id to your next Intent
+
+                SharedPreferences settings = signup.this.getSharedPreferences("LANG", 0);
+                SharedPreferences.Editor editor = settings.edit();
+                //store default language
+                if (Locale.getDefault().getDisplayLanguage().contentEquals("fr")) {
+                    editor.putInt("language", 1);
+                }
+                else {
+                    editor.putInt("language", 0);
+                }
+                editor.commit();
+
                 startActivity(myIntent);
                 finish();
 

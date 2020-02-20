@@ -2,6 +2,10 @@
     <string name="appname" translatable="false">The Running App</string>
 
     <string name="action_sign_in">Log In</string>
+    <string name="action_newacc">Create Account</string>
+
+    <string name="createacc">New user? Create account</string>
+
     <string name="backtomain">Back</string>
 
     <!--menu values-->
