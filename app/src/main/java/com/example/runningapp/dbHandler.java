@@ -53,22 +53,6 @@ public class dbHandler extends SQLiteOpenHelper {
 
     // Table names
     private static final String TABLE_ROUTE = "route";
-    private static final String TABLE_LOG = "log";
-
-    //Log Table Columns names
-    private static final String KEY_LOG = "flag";
-    private static final String KEY_LOGUSR = "loggeduserid";
-
-    // User Table Columns names
-   // private static final String KEY_USID = "userID";
-//    private static final String KEY_PWD = "password";
-//    private static final String KEY_NAME = "name";
-//    private static final String KEY_SURN = "surname";
-//    private static final String KEY_EMAIL= "email";
-//    private static final String KEY_KG = "kg";
-//    private static final String KEY_KMW = "kmgoal_weekly";
-//    private static final String KEY_KMD = "kmgoal_daily";
-//    private static final String KEY_KMM = "kmgoal_monthly";
 
     //Route Table Columns names
     private static final String KEY_RTID = "routeID";
@@ -93,10 +77,6 @@ public class dbHandler extends SQLiteOpenHelper {
                 + KEY_RTID + " TEXT PRIMARY KEY," + KEY_USID + " TEXT ," + KEY_DIST + " TEXT,"
                 +  KEY_STRT + " TEXT," + KEY_END + " TEXT,"+ KEY_STIME + "TEXT," + KEY_DUR + "TEXT," + KEY_AVG + " TEXT," + KEY_STEPS + "TEXT)";
         db.execSQL(CREATE_ROUTE_TABLE);
-
-        String CREATE_ROUTE_LOG = "CREATE TABLE " + TABLE_LOG + "("
-                + KEY_LOG + " TEXT PRIMARY KEY," + KEY_LOGUSR + "TEXT)";
-        db.execSQL(CREATE_ROUTE_LOG);
 
         //Links the remote database
         remoteDatabase = FirebaseDatabase.getInstance();
@@ -275,18 +255,16 @@ public class dbHandler extends SQLiteOpenHelper {
 
     }
 
-    public boolean isUser(String username) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_ROUTE, new String[] {KEY_RTID,KEY_USID,KEY_DIST  ,
-                        KEY_STRT ,KEY_END ,KEY_STIME , KEY_DUR , KEY_AVG }, KEY_USID + "=?",
-                new String[] { username }, null, null, null, null);
-        if (cursor!=null && cursor.getCount()>0) {
-            cursor.close();
-            return true;
-        }
-        else{
-            return false;
-        }
+    public boolean isUser(final String username) {
+
+       /* userRef.equalTo(username).once("value",function(snapshot) {
+            if (snapshot.exists()){
+                SharedPreferences settings = ctx.getSharedPreferences(PREFS_USER, 0);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putString("user_id", userTemp.getUserID());
+            }
+        });*/
+        return true;
     }
 
 
