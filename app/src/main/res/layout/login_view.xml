@@ -145,6 +145,17 @@
                 android:textColor="#ffffff"
                 android:textSize="15sp"
                 />
+            <Button
+                android:id="@+id/signBtn"
+                android:layout_width="130dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:text="@string/createacc"
+                android:background="#90A4AE"
+                android:textColor="#ffffff"
+                android:textSize="15sp"
+                />
 
         </LinearLayout>
 

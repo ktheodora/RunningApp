@@ -1,8 +1,14 @@
 package com.example.runningapp;
 
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,240 +18,197 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
-//implements AdapterView.OnItemSelectedListener
 
-public class settings extends AppCompatActivity {
-    private Button update, back;
-    double Income = 0, Budget = 0,Rent =0,Bills =0,Insurance =0;
-    String username, newTreshold ;
+public class settings extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+    Button save, back;
+    float kilos = 0, targetD = 0,targetW =0, targetM =0;
+    String username = "", email = "",  password= "" , language = "English";
     dbHandler peopleDB;
+    EditText KilosView, TargetDView, TargetWView, TargetMView, UsernameView, EmailView,  PasswordView ;
     static String USERPREF = "USER"; // or other value
-    Spinner spinner;
+    Spinner LangSpinner;
     User usr;
-    Map<String, Double> cats;
-    List<String> categories = new ArrayList<>();
-    private ImageButton menuBtn;
+    ImageButton menuBtn;
     menuHandler MenuHandler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_view);
 
-        peopleDB = new dbHandler(this);
+        KilosView = (EditText) findViewById(R.id.settingskilos_text);
+        TargetDView = (EditText) findViewById(R.id.settingstargetd_text);
+        TargetWView = (EditText) findViewById(R.id.settingstargetw_text);
+        TargetMView = (EditText) findViewById(R.id.settingstargetm_text);
 
-        /*
+        UsernameView = (EditText) findViewById(R.id.etUsname);
+        PasswordView = (EditText) findViewById(R.id.etPassword);
+        EmailView = (EditText) findViewById(R.id.entEmail);
+
+        save = (Button) findViewById(R.id.saveBtn);
+        back = (Button) findViewById(R.id.backBtn);
+
         Bundle b = getIntent().getExtras();
-        //we pass all the arguments cause they need to be passed again on the homepage
-        //in order to be displayed
-        if (b != null)
-            username = b.getString("username");
 
-        usr = peopleDB.getLoggedUser();
+        peopleDB = new dbHandler(this);
+        usr =peopleDB.getLoggedUser();
 
-        cats = peopleDB.getThresholds(username);
-        categories.clear();
-        for (Map.Entry<String, Double> entry : cats.entrySet()) {
-            categories.add(entry.getKey()+"- max €:" + String.valueOf(entry.getValue()) );
+        if (b != null) {
+
+            if (b.containsKey("createAccount")) {
+                //Show dialog box with app rules
+                AlertDialog.Builder bx1 = new AlertDialog.Builder(settings.this);
+                bx1.setTitle("Welcome to The Running App!");
+                bx1.setMessage("\n-Make sure to enter your daily, weekly & monthly km goal, " +
+                        "as well as your current weight.\n" +
+                        "\n-To start using the Running App," +
+                        "\nnavigate to Menu -> Home.\n"
+                         );
+                bx1.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.cancel();
+
+                    }
+                });
+
+                AlertDialog alertDialog = bx1.create();
+                alertDialog.show();
+            }
         }
 
-        spinner= (Spinner) findViewById(R.id.spinner);
-        ArrayAdapter<String> datAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, categories);
+        LangSpinner = (Spinner) findViewById(R.id.settingslang_text);
+        List<String> languages = new ArrayList<>();
+        languages.add("English");
+        languages.add("French");
+        ArrayAdapter<String> datAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,languages );
         datAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(datAdapter);
-        spinner.setOnItemSelectedListener(this);
-
-        update=(Button)findViewById(R.id.finButton);
-        update.setOnClickListener(new View.OnClickListener() {
+        LangSpinner.setAdapter(datAdapter);
+        LangSpinner.setOnItemSelectedListener(this);
+        save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updated(Income,Budget, Rent,Bills,Insurance);
-                updateCats();
+                updated(kilos, targetD,targetW, targetM , username, email , password);
             }
         });
 
-        back =(Button)findViewById(R.id.backButton);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MenuHandler.goToHomePage();
             }
         });
-        MenuHandler = new menuHandler(updateDetail.this, username);
+
+        MenuHandler = new menuHandler(settings.this, username);
         menuBtn  = (ImageButton) findViewById(R.id.menuLines);
         menuBtn  = (ImageButton) findViewById(R.id.menuLines);
         menuBtn.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                PopupMenu popup = new PopupMenu(updateDetail.this, v);
+                PopupMenu popup = new PopupMenu(settings.this, v);
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         return MenuHandler.onMenuItemClick(item);
                     }
                 });
-                popup.inflate(R.menu.drawermenu);
+                popup.inflate(R.menu.menu_main);
                 popup.show();
             }
-        });*/
+        });
 
     }
-/*
-    private void updated(double Income, double budget, double Rent, double Bills, double Insurance)
+
+    private void updated(float Kilos, float TargetD, float TargetW,float TargetM, String Username, String Email, String Password)
     {
         boolean b = false;
-        EditText IncomeView   = (EditText)findViewById(R.id.entInc);
         //Only if value of view changes we update it, orelse we pass the initial again
-        if (!TextUtils.isEmpty(IncomeView.getText())) {
-            Income = Double.parseDouble(IncomeView.getText().toString());
-            usr.setIncome(Income);
+        if (!TextUtils.isEmpty(KilosView.getText())) {
+            Kilos = Float.parseFloat(KilosView.getText().toString());
+            usr.setKg(Kilos);
             b = true;
         }
 
-        EditText BudgetView   = (EditText)findViewById(R.id.entBud);
-        if (!TextUtils.isEmpty(BudgetView.getText())){
-            budget = Double.parseDouble(BudgetView.getText().toString());
-            usr.setBudget(budget);
+        if (!TextUtils.isEmpty(TargetDView.getText())) {
+            TargetD = Float.parseFloat(TargetDView.getText().toString());
+            usr.setKmgoal_daily(TargetD);
             b = true;
         }
 
-        EditText BillsView   = (EditText)findViewById(R.id.entBills);
-        if (!TextUtils.isEmpty(BillsView.getText())){
-            Bills = Double.parseDouble(BillsView.getText().toString());
-            usr.setBills(Bills);
+        if (!TextUtils.isEmpty(TargetWView.getText())) {
+            TargetW = Float.parseFloat(TargetWView.getText().toString());
+            usr.setKmgoal_weekly(TargetW);
             b = true;
         }
 
-        EditText RentView  = (EditText)findViewById(R.id.entRen);
-        if (!TextUtils.isEmpty(RentView.getText())) {
-            Rent = Double.parseDouble(RentView.getText().toString());
-            usr.setRent(Rent);
+        if (!TextUtils.isEmpty(TargetMView.getText())) {
+            TargetM = Float.parseFloat(TargetMView.getText().toString());
+            usr.setKmgoal_monthly(TargetM);
             b = true;
         }
 
-        EditText InsuranceView   = (EditText)findViewById(R.id.entIns);
-        if (!TextUtils.isEmpty(InsuranceView.getText())) {
-            Insurance = Double.parseDouble(InsuranceView.getText().toString());
-            usr.setInsurance(Insurance);
+        if (!TextUtils.isEmpty(UsernameView.getText())) {
+            Username = UsernameView.getText().toString();
+            usr.setUserID(Username);
             b = true;
         }
+
+        if (!TextUtils.isEmpty(PasswordView.getText())) {
+            Password = PasswordView.getText().toString();
+            usr.setPwd(peopleDB.md5(Password));
+            b = true;
+        }
+
+        if (!TextUtils.isEmpty(EmailView.getText())) {
+            Email = EmailView.getText().toString();
+            usr.setEmail(Email);
+            b = true;
+        }
+
 
         if (!b) {
             // if user didn't enter any details but pressed button
-            Toast t = Toast.makeText(updateDetail.this,
+            Toast t = Toast.makeText(settings.this,
                     "No values entered!", Toast.LENGTH_LONG);
             t.show();
         }
-        else if ((usr.getIncome() - usr.getRent() + usr.getBills() + usr.getInsurance()) < usr.getBudget() ) {
-            Toast t = Toast.makeText(updateDetail.this,
-                    "Budget cannot be more than income - stable expenses. " +
-                            "Please decrease budget or increase income", Toast.LENGTH_LONG);
-            t.show();
-        }
         else {
-            int isUpdated = peopleDB.updateUser(usr);
-            if (isUpdated == 0) {
-                Toast t = Toast.makeText(updateDetail.this,
-                        "Problem with Database Update", Toast.LENGTH_LONG);
-                t.show();
-            }
-            else {
-                Toast t = Toast.makeText(updateDetail.this,
+            peopleDB.updateUser(usr);
+            Toast t = Toast.makeText(settings.this,
                         "Changes Saved", Toast.LENGTH_LONG);
                 t.show();
+            if(LangSpinner.isSelected()) {
+                String spinnerItem = LangSpinner.getSelectedItem().toString();
+                SharedPreferences settings = getSharedPreferences("LANG", 0);
 
+                SharedPreferences.Editor editor = settings.edit();
+                String lang ;
+                if (spinnerItem.contentEquals("English")) {
+                    lang = "en";
+                    editor.putInt("language", 1);
+                }
+                else {
+                    lang = "fr";
+                    editor.putInt("language", 0);
+                }
+                editor.commit();
+                Locale myLocale = new Locale(lang);
+                Resources res = getResources();
+                DisplayMetrics dm = res.getDisplayMetrics();
+                Configuration conf = res.getConfiguration();
+                conf.locale = myLocale;
+                res.updateConfiguration(conf, dm);
             }
+            MenuHandler.goToSettings();
         }
 
-    }
-
-    public void updateCats () {
-        EditText entCat = (EditText) findViewById(R.id. entCat);
-        EditText entThres = (EditText) findViewById(R.id.entThres);
-        boolean b = false;
-        dbHandler db = new dbHandler(this);
-        if (!TextUtils.isEmpty(entCat.getText())) {
-            if(TextUtils.isEmpty(entThres.getText())) {
-                Toast t = Toast.makeText(updateDetail.this,
-                        "Please enter threshold for new category", Toast.LENGTH_LONG);
-                t.show();
-            }
-            else {//both values are given
-                b = true;
-            }
-        }
-        if (!TextUtils.isEmpty(entThres.getText())) {
-            if(TextUtils.isEmpty(entCat.getText())) {
-                Toast t = Toast.makeText(updateDetail.this,
-                        "Please enter name for new category", Toast.LENGTH_LONG);
-                t.show();
-            }
-            else {//both values are given
-                b = true;
-            }
-        }
-
-        if (b) {
-            String newCat = entCat.getText().toString();
-            Double newThres = Double.parseDouble(entThres.getText().toString());
-            double sum = 0;
-            Map<String, Double> map = peopleDB.getThresholds(username);
-            for (Map.Entry<String, Double> entry : map.entrySet()) {
-                sum += entry.getValue();
-            }
-            if((sum + newThres) > usr.getBudget()) {
-                Toast t = Toast.makeText(updateDetail.this,
-                        "Total of thresholds are more than budget." +
-                                "Please increase budget or decrease another threshold" + newCat, Toast.LENGTH_LONG);
-                t.show();
-            }
-            else if (db.categoryExists(username,newCat)) {
-                Toast t = Toast.makeText(updateDetail.this,
-                        "Category name already exists" , Toast.LENGTH_LONG);
-                t.show();
-            }else {
-                db.addNewCategory(username, newCat, newThres);
-                Toast t = Toast.makeText(updateDetail.this,
-                        "Succesful addition of category " + newCat, Toast.LENGTH_LONG);
-                t.show();
-                MenuHandler.goToDetails();
-            }
-        }
-
-        EditText updatedThres = (EditText) findViewById(R.id.newThres);
-        if (!TextUtils.isEmpty(updatedThres.getText())) {
-            //only if a threshold is given
-            Double upThres = Double.parseDouble(updatedThres.getText().toString());
-            String spinnerItem = spinner.getSelectedItem().toString();
-            String[] splitter = spinnerItem.split("-");
-            String updatedCat = splitter[0];
-            double sum = 0;
-            Map<String, Double> map = peopleDB.getThresholds(username);
-            double oldThres = map.get(updatedCat);
-            for (Map.Entry<String, Double> entry : map.entrySet()) {
-                sum += entry.getValue();
-
-            }
-            if(((sum - oldThres) +upThres) > usr.getBudget()) {
-                Toast t = Toast.makeText(updateDetail.this,
-                        "Total of thresholds with " + updatedCat +" are more than budget." +
-                                "Please increase budget or decrease another threshold" , Toast.LENGTH_LONG);
-                t.show();
-            }
-            else {
-                //because we are displaying another name
-                db.updateCategory(username, updatedCat, upThres);
-                Toast t = Toast.makeText(updateDetail.this,
-                        "Successful update of " + updatedCat + " threshold", Toast.LENGTH_LONG);
-                t.show();
-                MenuHandler.goToDetails();
-            }
-        }
-        db.close();
     }
 
     @Override
@@ -255,17 +218,10 @@ public class settings extends AppCompatActivity {
             String item = parent.getItemAtPosition(position).toString();
             // Showing selected spinner item
             Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
-        }
         }*/
+    }
 
-
-
-   /* @Override
+    @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        EditText newThres = (EditText) findViewById(R.id.newThres);
-        newTreshold = newThres.getText().toString();
-        if (newTreshold.isEmpty()) {
-            Toast.makeText(parent.getContext(), "Please enter threshold amount" , Toast.LENGTH_LONG).show();
-        }
-    } */
+    }
 }

@@ -145,7 +145,7 @@ public class dbHandler extends SQLiteOpenHelper {
         String encrypt = md5(user.getPwd());
         usr.child("password").setValue(encrypt);
         usr.child("surname").setValue(user.getSurname());
-        usr.child("height").setValue(user.getHeight());
+        usr.child("weight").setValue(user.getWeight());
 
     }
 
@@ -161,7 +161,7 @@ public class dbHandler extends SQLiteOpenHelper {
         String encrypt = md5(user.getPwd());
         usr.child("password").setValue(encrypt);
         usr.child("surname").setValue(user.getSurname());
-        usr.child("height").setValue(user.getHeight());
+        usr.child("weight").setValue(user.getWeight());
 
     }
 
@@ -190,7 +190,7 @@ public class dbHandler extends SQLiteOpenHelper {
                 editor.putString("user_surname", userTemp.getSurname());
                 editor.putString("user_email", userTemp.getEmail());
                 editor.putFloat("user_kg", userTemp.getKg());
-                editor.putFloat("user_height", userTemp.getHeight());
+                editor.putFloat("user_height", userTemp.getWeight());
                 editor.putFloat("user_km_w", userTemp.getKmgoal_weekly());
                 editor.putFloat("user_km_d", userTemp.getKmgoal_daily());
                 editor.putFloat("user_km_m", userTemp.getKmgoal_monthly());
@@ -214,12 +214,12 @@ public class dbHandler extends SQLiteOpenHelper {
         String user_surname = settings.getString("user_surname","0" );
         String user_email = settings.getString("user_email","0" );
         Float user_kg = settings.getFloat("user_kg",0);
-        Float user_height = settings.getFloat("user_height",0);
+        Float user_weight = settings.getFloat("user_weight",0);
         Float user_km_w = settings.getFloat("user_km_w",0);
         Float user_km_d = settings.getFloat("user_km_d",0);
         Float user_km_m = settings.getFloat("user_km_m",0);
 
-        User usr = new User(user_id,user_pass,user_name,user_email,user_surname,user_kg,user_height,user_km_w,user_km_d,user_km_m);
+        User usr = new User(user_id,user_pass,user_name,user_email,user_surname,user_kg,user_weight,user_km_w,user_km_d,user_km_m);
         return  usr;
     }
 

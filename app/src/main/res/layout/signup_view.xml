@@ -219,16 +219,28 @@
 
             </LinearLayout>
         <Button
-            android:id="@+id/loginBtn"
+            android:id="@+id/signBtn"
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:layout_marginTop="40dp"
-            android:text="@string/action_sign_in"
+            android:text="@string/action_newacc"
             android:background="#90A4AE"
             android:textColor="#ffffff"
             android:textSize="15sp"
             />
+
+            <Button
+                android:id="@+id/loginBtn"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp"
+                android:text="@string/action_sign_in"
+                android:background="#90A4AE"
+                android:textColor="#ffffff"
+                android:textSize="15sp"
+                />
 
     </LinearLayout>
 
