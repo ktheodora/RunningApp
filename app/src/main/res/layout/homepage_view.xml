@@ -63,13 +63,6 @@
             </LinearLayout>
 
 
-            <ImageView
-                android:id="@+id/compass"
-                android:layout_width="match_parent"
-                android:layout_height="69dp"
-                app:srcCompat="@drawable/compass" />
-
-
             <TextView
                 android:id="@+id/speedTextView"
                 android:layout_width="143dp"
@@ -100,6 +93,18 @@
                     android:textColor="#ffffff"
                     android:textSize="15sp"
                     android:background="#90A4AE"/>
+
+                <ImageView
+                    android:paddingTop="10dp"
+                    android:id="@+id/compass"
+                    android:layout_width="match_parent"
+                    android:layout_height="69dp"
+                    app:srcCompat="@drawable/compass" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/compassText"/>
 
             </LinearLayout>
 
