@@ -4,6 +4,10 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -16,8 +20,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,7 +47,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Locale;
 
-public class homepage extends AppCompatActivity {
+public class homepage extends AppCompatActivity implements SensorEventListener {
 
     String BASE_URL = "https://api.openweathermap.org/data/2.5/weather?";
     String API_TOKEN = "20773309acdcb2327c3e622c91d0bd3f";
@@ -51,6 +58,14 @@ public class homepage extends AppCompatActivity {
     TextView degrees;
     TextView rateView;
     TextView clothesView;
+
+    //Compass
+    // device sensor manager
+    private SensorManager SensorManage;
+    // define the compass picture that will be use
+    private ImageView compassimage;
+    // record the angle turned of the compass picture
+    private float DegreeStart = 0f;
 
     RequestQueue mQueue;
 
@@ -65,7 +80,15 @@ public class homepage extends AppCompatActivity {
         dbHandler db_handler = new dbHandler(this);
         db_handler.setCtx(this);
 
+        Intent myIntent = new Intent(homepage.this, homepage.class);
+        startActivity(myIntent);
+
         System.out.println("TEMP --------------"+db_handler.userTemp);
+
+        //Compass
+        compassimage = (ImageView) findViewById(R.id.compass);
+        // initialize your android device sensor capabilities
+        SensorManage = (SensorManager) getSystemService(SENSOR_SERVICE);
 
         city = (TextView) findViewById(R.id.city);
         degrees = findViewById(R.id.degrees);
@@ -189,4 +212,28 @@ public class homepage extends AppCompatActivity {
         mQueue.add(jor);
     }
 
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        // get angle around the z-axis rotated
+        float degree = Math.round(event.values[0]);
+        //DegreeTV.setText("Heading: " + Float.toString(degree) + " degrees");
+        // rotation animation - reverse turn degree degrees
+        RotateAnimation ra = new RotateAnimation(
+                DegreeStart,
+                -degree,
+                Animation.RELATIVE_TO_SELF, 0.5f,
+                Animation.RELATIVE_TO_SELF, 0.5f);
+        // set the compass animation after the end of the reservation status
+        ra.setFillAfter(true);
+        // set how long the animation for the compass image will take place
+        ra.setDuration(210);
+        // Start animation of compass image
+        compassimage.startAnimation(ra);
+        DegreeStart = -degree;
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+        //Not used
+    }
 }

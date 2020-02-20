@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.runningapp.homepage">
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -63,18 +63,24 @@
             </LinearLayout>
 
 
+            <ImageView
+                android:id="@+id/compass"
+                android:layout_width="match_parent"
+                android:layout_height="69dp"
+                app:srcCompat="@drawable/compass" />
+
+
             <TextView
                 android:id="@+id/speedTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="143dp"
+                android:layout_height="142dp"
                 android:layout_gravity="center"
+                android:layout_marginTop="50dp"
                 android:layout_weight="1"
                 android:background="@drawable/circle"
                 android:gravity="center"
                 android:textColor="#FFFFFF"
-                android:layout_marginTop="50dp"
                 android:textSize="30sp" />
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -267,7 +273,6 @@
                     android:text="@string/routesbtn"
                     android:textSize="15sp" />
             </LinearLayout>
-
 
 
         </LinearLayout>

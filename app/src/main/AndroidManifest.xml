@@ -18,8 +18,8 @@
         <activity android:name=".routeList"/>
         <activity android:name=".settings"/>
         <activity android:name=".statistics"/>
-        <activity android:name=".homepage"/>
-        <activity android:name=".signup">
+        <activity android:name=".signup"/>
+        <activity android:name=".homepage">
         <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

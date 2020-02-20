@@ -7,8 +7,6 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Point;
-import android.location.Location;
 import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
@@ -21,9 +19,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.concurrent.CountDownLatch;
 
 import static android.content.ContentValues.TAG;
 
@@ -39,6 +35,7 @@ public class dbHandler extends SQLiteOpenHelper {
     DatabaseReference userRef = remoteDatabase.getReference("User");
 
     User userTemp;
+    boolean isuser = false;
     Context ctx;
 
     public void setCtx(Context ctx) {
@@ -256,15 +253,40 @@ public class dbHandler extends SQLiteOpenHelper {
     }
 
     public boolean isUser(final String username) {
-
-       /* userRef.equalTo(username).once("value",function(snapshot) {
-            if (snapshot.exists()){
-                SharedPreferences settings = ctx.getSharedPreferences(PREFS_USER, 0);
-                SharedPreferences.Editor editor = settings.edit();
-                editor.putString("user_id", userTemp.getUserID());
+        final boolean[] yesorno = {false};
+        readData(username, new FirebaseCallback() {
+            @Override
+            public void onCallBack(Boolean isuser) {
+                yesorno[0] = isuser;
+                System.out.println("AAAAAAAAAAAA- apres -----------"+yesorno[0]);
             }
-        });*/
-        return true;
+        });
+        return yesorno[0];
+    }
+
+    public void readData(String username, final FirebaseCallback firebaseCallback){
+        DatabaseReference userNameRef = userRef.child(username);
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()) {
+                    isuser = true;
+                }else{
+                    isuser = false;
+                }
+                firebaseCallback.onCallBack(isuser);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, databaseError.getMessage());
+            }
+        };
+        userNameRef.addListenerForSingleValueEvent(eventListener);
+    }
+
+    public interface FirebaseCallback {
+        void onCallBack(Boolean isuser);
     }
 
 

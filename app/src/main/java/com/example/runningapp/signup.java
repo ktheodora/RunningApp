@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -123,7 +121,10 @@ public class signup extends AppCompatActivity {
             t.show();
             //to overcome database problems
         }
-        else if (peopleDB.isUser(UserName.getText().toString())) {
+        else if (!peopleDB.isUser(UserName.getText().toString())) {
+
+            System.out.println("AAAAAAAAAAAA- c mort-----------");
+
             Toast t = Toast.makeText(signup.this,
                     "Username already taken", Toast.LENGTH_LONG);
             t.show();
