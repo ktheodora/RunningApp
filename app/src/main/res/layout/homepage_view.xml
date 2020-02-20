@@ -63,13 +63,6 @@
             </LinearLayout>
 
 
-            <ImageView
-                android:id="@+id/compass"
-                android:layout_width="match_parent"
-                android:layout_height="69dp"
-                app:srcCompat="@drawable/compass" />
-
-
             <TextView
                 android:id="@+id/speedTextView"
                 android:layout_width="143dp"
@@ -85,24 +78,30 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_marginTop="40dp"
+                android:background="#F5F5F5"
 
-                android:background="#F5F5F5">
+                android:orientation="vertical">
 
                 <Button
                     android:id="@+id/startStopbtn"
                     android:layout_width="130dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
-                    android:text="@string/startbtn"
+                    android:background="#90A4AE"
                     android:gravity="center"
+                    android:text="@string/startbtn"
                     android:textColor="#ffffff"
-                    android:textSize="15sp"
-                    android:background="#90A4AE"/>
+                    android:textSize="15sp" />
 
             </LinearLayout>
 
+
+            <ImageView
+                android:id="@+id/compass"
+                android:layout_width="match_parent"
+                android:layout_height="69dp"
+                app:srcCompat="@drawable/compass" />
 
             <TextView
                 android:id="@+id/todaylabel"

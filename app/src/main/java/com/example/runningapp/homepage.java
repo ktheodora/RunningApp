@@ -9,6 +9,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.Address;
+import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
@@ -80,10 +81,7 @@ public class homepage extends AppCompatActivity implements SensorEventListener {
         dbHandler db_handler = new dbHandler(this);
         db_handler.setCtx(this);
 
-        Intent myIntent = new Intent(homepage.this, homepage.class);
-        startActivity(myIntent);
-
-        System.out.println("TEMP --------------"+db_handler.userTemp);
+       // System.out.println("TEMP --------------"+db_handler.userTemp);
 
         //Compass
         compassimage = (ImageView) findViewById(R.id.compass);
@@ -100,7 +98,7 @@ public class homepage extends AppCompatActivity implements SensorEventListener {
         double longitude = 0;
         double latitude = 0;
 
-        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+        /*if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }else {
             LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -131,7 +129,7 @@ public class homepage extends AppCompatActivity implements SensorEventListener {
         System.out.println(countryCode);
 
 
-        retrieveWeather(postalCode, countryCode);
+        retrieveWeather(postalCode, countryCode);*/
 
         //Firebase test
         User us = new User("2","1","Guillaume","toto@gmail.com","BETROM",5,5,5,5,5);
