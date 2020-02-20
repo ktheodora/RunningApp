@@ -134,7 +134,7 @@
 
                 <!-- Changing dynamically always so no need for @string value-->
                 <TextView
-                    android:id="@+id/city"
+                    android:id="@+id/avgSpeedLabel"
                     android:layout_width="190dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -146,7 +146,7 @@
                 <!-- Changing dynamically always so no need for @string value-->
 
                 <TextView
-                    android:id="@+id/degrees"
+                    android:id="@+id/avgSpeed"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -176,7 +176,7 @@
                     app:srcCompat="@drawable/humidity" />
 
                 <TextView
-                    android:id="@+id/humiditylabel"
+                    android:id="@+id/distLabel"
                     android:layout_width="190dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -188,7 +188,7 @@
                 <!-- Changing dynamically always so no need for @string value-->
 
                 <TextView
-                    android:id="@+id/humidity"
+                    android:id="@+id/dist"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -218,7 +218,7 @@
                     app:srcCompat="@drawable/tshirt" />
 
                 <TextView
-                    android:id="@+id/outfitlabel"
+                    android:id="@+id/strtTimeLabel"
                     android:layout_width="190dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -230,7 +230,7 @@
                 <!-- Changing dynamically always so no need for @string value-->
 
                 <TextView
-                    android:id="@+id/outfit"
+                    android:id="@+id/strtTime"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

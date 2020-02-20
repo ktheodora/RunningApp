@@ -180,20 +180,21 @@ public class dbHandler extends SQLiteOpenHelper {
                     children.add(var);
                     System.out.println("VAR  ------- "+var);
                 }
-                userTemp.update(String.valueOf(userID),String.valueOf(children.get(7)),String.valueOf(children.get(6)),String.valueOf(children.get(0)),String.valueOf(children.get(8)),Float.parseFloat(String.valueOf(children.get(2))),Float.parseFloat(String.valueOf(children.get(1))),Float.parseFloat(String.valueOf(children.get(5))),Float.parseFloat(String.valueOf(children.get(3))),Float.parseFloat(String.valueOf(children.get(4))));
+                User userTemp1 = new User();
+                userTemp1.update(String.valueOf(userID),String.valueOf(children.get(7)),String.valueOf(children.get(6)),String.valueOf(children.get(0)),String.valueOf(children.get(8)),Float.parseFloat(String.valueOf(children.get(2))),Float.parseFloat(String.valueOf(children.get(1))),Float.parseFloat(String.valueOf(children.get(5))),Float.parseFloat(String.valueOf(children.get(3))),Float.parseFloat(String.valueOf(children.get(4))));
 
                 SharedPreferences settings = ctx.getSharedPreferences(PREFS_USER, 0);
                 SharedPreferences.Editor editor = settings.edit();
-                editor.putString("user_id", userTemp.getUserID());
-                editor.putString("user_pass", userTemp.getPassword_raw());
-                editor.putString("user_name", userTemp.getName());
-                editor.putString("user_surname", userTemp.getSurname());
-                editor.putString("user_email", userTemp.getEmail());
-                editor.putFloat("user_kg", userTemp.getKg());
-                editor.putFloat("user_height", userTemp.getWeight());
-                editor.putFloat("user_km_w", userTemp.getKmgoal_weekly());
-                editor.putFloat("user_km_d", userTemp.getKmgoal_daily());
-                editor.putFloat("user_km_m", userTemp.getKmgoal_monthly());
+                editor.putString("user_id", userTemp1.getUserID());
+                editor.putString("user_pass", userTemp1.getPassword_raw());
+                editor.putString("user_name", userTemp1.getName());
+                editor.putString("user_surname", userTemp1.getSurname());
+                editor.putString("user_email", userTemp1.getEmail());
+                editor.putFloat("user_kg", userTemp1.getKg());
+                editor.putFloat("user_height", userTemp1.getWeight());
+                editor.putFloat("user_km_w", userTemp1.getKmgoal_weekly());
+                editor.putFloat("user_km_d", userTemp1.getKmgoal_daily());
+                editor.putFloat("user_km_m", userTemp1.getKmgoal_monthly());
 
                 // Commit the edits
                 editor.commit();

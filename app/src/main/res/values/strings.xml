@@ -68,5 +68,19 @@
     <string name="rowdur_tag">Duration: </string>
     <string name="rowloc_tag">Location: </string>
 
+    <!--route values-->
+    <string name="routedetails">Route Details</string>
+    <string name="avgspeed">Average Speed</string>
+    <string name="dist">Distance</string>
+    <string name="starttime">Starting Time</string>
+    <string name="duration">Duration</string>
+    <string name="startpoint">Starting Point</string>
+    <string name="endpoint">Endpoint</string>
+    <string name="Steps">Steps</string>
+
+
+
+
+
 
 </resources>

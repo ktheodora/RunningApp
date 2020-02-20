@@ -1,52 +1,34 @@
 package com.example.runningapp;
 
-import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.location.Address;
-import android.location.Criteria;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationManager;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.List;
-import java.util.Locale;
 
 public class homepage extends AppCompatActivity implements SensorEventListener {
 
@@ -88,10 +70,10 @@ public class homepage extends AppCompatActivity implements SensorEventListener {
         // initialize your android device sensor capabilities
         SensorManage = (SensorManager) getSystemService(SENSOR_SERVICE);
 
-        city = (TextView) findViewById(R.id.city);
-        degrees = findViewById(R.id.degrees);
-        rateView = findViewById(R.id.humidity);
-        clothesView = findViewById(R.id.outfit);
+        city = (TextView) findViewById(R.id.avgSpeedLabel);
+        degrees = findViewById(R.id.avgSpeed);
+        rateView = findViewById(R.id.dist);
+        clothesView = findViewById(R.id.strtTime);
 
         mQueue = Volley.newRequestQueue(this);
 
