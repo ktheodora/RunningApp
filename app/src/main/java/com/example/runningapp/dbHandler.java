@@ -344,4 +344,22 @@ public class dbHandler extends SQLiteOpenHelper {
         cursor.close();
         return routeList;
     }
+
+    public boolean removeRoute(Route r) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.query(TABLE_ROUTE, new String[] {KEY_RTID,KEY_USID,KEY_DIST  ,
+                        KEY_STRT ,KEY_END ,KEY_STIME , KEY_DUR , KEY_AVG }, KEY_USID + "=?",
+                new String[] { r.getRouteID() }, null, null, null, null);
+        //Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor!=null && cursor.getCount()>0) {
+            db.delete(TABLE_ROUTE,KEY_RTID + "=?",new String[] { String.valueOf(r.getRouteID()) });
+            cursor.close();
+            db.close();
+            return true;
+        }
+        else{
+            //expense not found, deletion not possible
+            return false;
+        }
+    }
 }

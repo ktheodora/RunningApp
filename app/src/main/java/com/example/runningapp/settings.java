@@ -18,13 +18,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 
 public class settings extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
@@ -53,7 +51,7 @@ public class settings extends AppCompatActivity implements AdapterView.OnItemSel
         EmailView = (EditText) findViewById(R.id.entEmail);
 
         save = (Button) findViewById(R.id.saveBtn);
-        back = (Button) findViewById(R.id.backBtn);
+        back = (Button) findViewById(R.id.baaackBtn);
 
         Bundle b = getIntent().getExtras();
 
