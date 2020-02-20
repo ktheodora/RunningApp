@@ -27,6 +27,7 @@ import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -201,6 +202,19 @@ public class routeList extends AppCompatActivity {
                 return true;
             }
         });
+
+        routelistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Route rou = route_list.get(position);
+                Intent myIntent = new Intent(routeList.this, routeDetails.class);
+                Bundle b = new Bundle();
+                b.putString("routeID",rou.getRouteID());
+                myIntent.putExtras(b); //Put your id to your next Intent
+                startActivity(myIntent);
+            }
+
+        });
     }
 
     private void updateLabel(EditText datepick) {
@@ -219,11 +233,18 @@ public class routeList extends AppCompatActivity {
             myMap.put("Date",roulist.get(i).getStarting_time().toString());
             myMap.put("Duration",roulist.get(i).getDuration().toString());
             Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+            String[] parts = roulist.get(i).getStartpoint().split("|");
+            double lat = Double.parseDouble(parts[0]);
+            double lot = Double.parseDouble(parts[1]);
+            List<Address> addresses = new ArrayList<Address>();
+            try {
+                addresses = geocoder.getFromLocation(lat,lot, 1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            String cityName = addresses.get(0).getAdminArea();
 
-            List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
-
-            //TODO Get city
-            // myMap.put("Location",roulist.get(i).getCategory());
+            myMap.put("Location",cityName);
 
             myMapList.add(myMap);
         }
@@ -244,8 +265,8 @@ public class routeList extends AppCompatActivity {
 
     public void showDeleteDialog(final int pos) {
         AlertDialog deleteAlert = new AlertDialog.Builder(this)
-                .setTitle("Remove Expense")
-                .setMessage("Are you sure you want to delete this expense?")
+                .setTitle("Remove Route")
+                .setMessage("Are you sure you want to delete this route?")
                 // Specifying a listener allows you to take an action before dismissing the dialog.
                 // The dialog is automatically dismissed when a dialog button is clicked.
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -254,10 +275,10 @@ public class routeList extends AppCompatActivity {
                         //choosing from the current category list
                         Route rou = route_list.get(pos);
                         if(dbhandler.removeRoute(rou)) {
-                            MenuHandler.showToast("Succesful removal of expense");
+                            MenuHandler.showToast("Succesful removal of route");
                         }
                         else {
-                            MenuHandler.showToast("Database issue, unable to remove expense");
+                            MenuHandler.showToast("Database issue, unable to remove route");
                         }
                         Intent myIntent = new Intent(routeList.this, routeList.class);
                         Bundle b = new Bundle();
