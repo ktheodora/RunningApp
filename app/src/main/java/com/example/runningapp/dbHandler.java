@@ -145,7 +145,7 @@ public class dbHandler extends SQLiteOpenHelper {
         String encrypt = md5(user.getPwd());
         usr.child("password").setValue(encrypt);
         usr.child("surname").setValue(user.getSurname());
-        usr.child("height").setValue(user.getHeight());
+        usr.child("weight").setValue(user.getWeight());
 
     }
 
@@ -161,7 +161,7 @@ public class dbHandler extends SQLiteOpenHelper {
         String encrypt = md5(user.getPwd());
         usr.child("password").setValue(encrypt);
         usr.child("surname").setValue(user.getSurname());
-        usr.child("height").setValue(user.getHeight());
+        usr.child("weight").setValue(user.getWeight());
 
     }
 
@@ -180,23 +180,20 @@ public class dbHandler extends SQLiteOpenHelper {
                     children.add(var);
                     System.out.println("VAR  ------- "+var);
                 }
-                System.out.println("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ"+children);
-
-                User userTemp1 = new User();
-                userTemp1.update(String.valueOf(userID),String.valueOf(children.get(7)),String.valueOf(children.get(6)),String.valueOf(children.get(0)),String.valueOf(children.get(8)),Float.parseFloat(String.valueOf(children.get(2))),Float.parseFloat(String.valueOf(children.get(1))),Float.parseFloat(String.valueOf(children.get(5))),Float.parseFloat(String.valueOf(children.get(3))),Float.parseFloat(String.valueOf(children.get(4))));
+                userTemp.update(String.valueOf(userID),String.valueOf(children.get(7)),String.valueOf(children.get(6)),String.valueOf(children.get(0)),String.valueOf(children.get(8)),Float.parseFloat(String.valueOf(children.get(2))),Float.parseFloat(String.valueOf(children.get(1))),Float.parseFloat(String.valueOf(children.get(5))),Float.parseFloat(String.valueOf(children.get(3))),Float.parseFloat(String.valueOf(children.get(4))));
 
                 SharedPreferences settings = ctx.getSharedPreferences(PREFS_USER, 0);
                 SharedPreferences.Editor editor = settings.edit();
-                editor.putString("user_id", userTemp1.getUserID());
-                editor.putString("user_pass", userTemp1.getPassword_raw());
-                editor.putString("user_name", userTemp1.getName());
-                editor.putString("user_surname", userTemp1.getSurname());
-                editor.putString("user_email", userTemp1.getEmail());
-                editor.putFloat("user_kg", userTemp1.getKg());
-                editor.putFloat("user_height", userTemp1.getHeight());
-                editor.putFloat("user_km_w", userTemp1.getKmgoal_weekly());
-                editor.putFloat("user_km_d", userTemp1.getKmgoal_daily());
-                editor.putFloat("user_km_m", userTemp1.getKmgoal_monthly());
+                editor.putString("user_id", userTemp.getUserID());
+                editor.putString("user_pass", userTemp.getPassword_raw());
+                editor.putString("user_name", userTemp.getName());
+                editor.putString("user_surname", userTemp.getSurname());
+                editor.putString("user_email", userTemp.getEmail());
+                editor.putFloat("user_kg", userTemp.getKg());
+                editor.putFloat("user_height", userTemp.getWeight());
+                editor.putFloat("user_km_w", userTemp.getKmgoal_weekly());
+                editor.putFloat("user_km_d", userTemp.getKmgoal_daily());
+                editor.putFloat("user_km_m", userTemp.getKmgoal_monthly());
 
                 // Commit the edits
                 editor.commit();
@@ -217,12 +214,12 @@ public class dbHandler extends SQLiteOpenHelper {
         String user_surname = settings.getString("user_surname","0" );
         String user_email = settings.getString("user_email","0" );
         Float user_kg = settings.getFloat("user_kg",0);
-        Float user_height = settings.getFloat("user_height",0);
+        Float user_weight = settings.getFloat("user_weight",0);
         Float user_km_w = settings.getFloat("user_km_w",0);
         Float user_km_d = settings.getFloat("user_km_d",0);
         Float user_km_m = settings.getFloat("user_km_m",0);
 
-        User usr = new User(user_id,user_pass,user_name,user_email,user_surname,user_kg,user_height,user_km_w,user_km_d,user_km_m);
+        User usr = new User(user_id,user_pass,user_name,user_email,user_surname,user_kg,user_weight,user_km_w,user_km_d,user_km_m);
         return  usr;
     }
 
@@ -346,5 +343,23 @@ public class dbHandler extends SQLiteOpenHelper {
         }
         cursor.close();
         return routeList;
+    }
+
+    public boolean removeRoute(Route r) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.query(TABLE_ROUTE, new String[] {KEY_RTID,KEY_USID,KEY_DIST  ,
+                        KEY_STRT ,KEY_END ,KEY_STIME , KEY_DUR , KEY_AVG }, KEY_USID + "=?",
+                new String[] { r.getRouteID() }, null, null, null, null);
+        //Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor!=null && cursor.getCount()>0) {
+            db.delete(TABLE_ROUTE,KEY_RTID + "=?",new String[] { String.valueOf(r.getRouteID()) });
+            cursor.close();
+            db.close();
+            return true;
+        }
+        else{
+            //expense not found, deletion not possible
+            return false;
+        }
     }
 }

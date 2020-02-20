@@ -45,4 +45,6 @@
     <string name="statstitle">Mes statistiques</string>
     <string name="stopbtn">Arrêter</string>
     <string name="todaylabel">"Conditions de course "</string>
+    <string name="createacc">Creer un compte a la place</string>
+    <string name="action_newacc">Creer un compte</string>
 </resources>
