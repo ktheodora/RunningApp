@@ -116,6 +116,12 @@ public class signup extends AppCompatActivity {
                 }
                 editor.commit();
 
+
+                SharedPreferences settings2 = signup.this.getSharedPreferences("USER", 0);
+                SharedPreferences.Editor editor2 = settings2.edit();
+                editor2.putString("def_user",username);
+                editor2.commit();
+
                 startActivity(myIntent);
                 finish();
 
@@ -148,9 +154,7 @@ public class signup extends AppCompatActivity {
             t.show();
             //to overcome database problems
         }
-        else if (!peopleDB.isUser(UserName.getText().toString())) {
-
-            System.out.println("AAAAAAAAAAAA- c mort-----------");
+        else if (peopleDB.isUser(UserName.getText().toString())) {
 
             Toast t = Toast.makeText(signup.this,
                     "Username already taken", Toast.LENGTH_LONG);

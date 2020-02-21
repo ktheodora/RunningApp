@@ -21,6 +21,7 @@ import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Locale;
 
@@ -98,6 +99,16 @@ public class menuHandler  {
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.clear();
         editor.apply();
+        //Creation of routes
+        Route r1 = new Route("1","1",10,10,new Date("21/02/2020"),new Date("01:10:00"),"38.8|23.72","38.6|23.82",130000);
+        Route r2 = new Route("2","1",11,10,new Date("20/02/2020"),new Date("01:00:00"),"38.8|23.72","38.6|23.62",130000);
+        Route r3 = new Route("3","1",20,10,new Date("19/02/2020"),new Date("02:10:00"),"38.8|23.72","38.5|23.82",130000);
+
+        peopleDB.addRoute(r1);
+        peopleDB.addRoute(r2);
+        peopleDB.addRoute(r3);
+
+
         //then redirect to initial activity
         showToast("Logging you out.. Bye!");
         Intent myIntent = new Intent(ctx, login.class);

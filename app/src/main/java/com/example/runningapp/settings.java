@@ -56,7 +56,12 @@ public class settings extends AppCompatActivity implements AdapterView.OnItemSel
         Bundle b = getIntent().getExtras();
 
         peopleDB = new dbHandler(this);
-        usr =peopleDB.getLoggedUser();
+
+        SharedPreferences settings2 = settings.this.getSharedPreferences("USER", 0);
+        String usernamestr = settings2.getString("def_user","0");
+
+        peopleDB.getUser(usernamestr);
+        usr = peopleDB.getLoggedUser();
 
         if (b != null) {
 

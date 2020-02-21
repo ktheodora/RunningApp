@@ -63,6 +63,9 @@ public class homepage extends AppCompatActivity implements SensorEventListener, 
     TextView clothesView;
     TextView speedTextView;
 
+    menuHandler MenuHandler;
+    ImageButton menuBtn;
+
     int mAzimuth;
     private SensorManager mSensorManager;
     private ImageView compassImage;
@@ -91,6 +94,7 @@ public class homepage extends AppCompatActivity implements SensorEventListener, 
 
         setContentView(R.layout.homepage_view);
         dbHandler db_handler = new dbHandler(this);
+
         db_handler.setCtx(this);
 
         //System.out.println("TEMP --------------"+db_handler.userTemp);
@@ -101,6 +105,23 @@ public class homepage extends AppCompatActivity implements SensorEventListener, 
         clothesView = findViewById(R.id.outfit);
         speedTextView = findViewById(R.id.speedTextView);
         speedTextView.setText("-.- km/h");
+
+
+        MenuHandler = new menuHandler(this, "1");
+        menuBtn  = (ImageButton) findViewById(R.id.menuLines);
+        menuBtn.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                PopupMenu popup = new PopupMenu(homepage.this, v);
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        return MenuHandler.onMenuItemClick(item);
+                    }
+                });
+                popup.inflate(R.menu.menu_main);
+                popup.show();
+            }
+        });
 
         df = new DecimalFormat("0.0");
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
