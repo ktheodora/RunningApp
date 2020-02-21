@@ -94,6 +94,18 @@
                     android:textColor="#ffffff"
                     android:textSize="15sp" />
 
+                <ImageView
+                    android:paddingTop="10dp"
+                    android:id="@+id/compass"
+                    android:layout_width="match_parent"
+                    android:layout_height="69dp"
+                    app:srcCompat="@drawable/compass" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/compassText"/>
+
             </LinearLayout>
 
 

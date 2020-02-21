@@ -1,34 +1,53 @@
 package com.example.runningapp;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.List;
+import java.util.Locale;
 
 public class homepage extends AppCompatActivity implements SensorEventListener {
 
@@ -41,12 +60,19 @@ public class homepage extends AppCompatActivity implements SensorEventListener {
     TextView degrees;
     TextView rateView;
     TextView clothesView;
+    TextView txt_compass;
 
-    //Compass
-    // device sensor manager
-    private SensorManager SensorManage;
-    // define the compass picture that will be use
-    private ImageView compassimage;
+    int mAzimuth;
+    private SensorManager mSensorManager;
+    private ImageView compassImage;
+    private Sensor mRotationV, mAcceloremeter, mMagnemeter;
+    float[] rMat = new float[9];
+    float[] orientation = new float[9];
+    private float[] mLastAccelerometer = new float[3];
+    private float[] mLastMagnemeter = new float[3];
+    private boolean haveSensor = false, haveSensor2 = false;
+    private boolean mLastAccelerometerSet = false;
+    private boolean mLastMagnemeterSet = false;
     // record the angle turned of the compass picture
     private float DegreeStart = 0f;
 
@@ -63,24 +89,25 @@ public class homepage extends AppCompatActivity implements SensorEventListener {
         dbHandler db_handler = new dbHandler(this);
         db_handler.setCtx(this);
 
-       // System.out.println("TEMP --------------"+db_handler.userTemp);
+        System.out.println("TEMP --------------"+db_handler.userTemp);
 
-        //Compass
-        compassimage = (ImageView) findViewById(R.id.compass);
-        // initialize your android device sensor capabilities
-        SensorManage = (SensorManager) getSystemService(SENSOR_SERVICE);
-
-        city = (TextView) findViewById(R.id.avgSpeedLabel);
-        degrees = findViewById(R.id.avgSpeed);
-        rateView = findViewById(R.id.dist);
-        clothesView = findViewById(R.id.strtTime);
+        city = (TextView) findViewById(R.id.city);
+        degrees = findViewById(R.id.degrees);
+        rateView = findViewById(R.id.humidity);
+        clothesView = findViewById(R.id.outfit);
 
         mQueue = Volley.newRequestQueue(this);
+
+        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        compassImage = (ImageView) findViewById(R.id.compass);
+        txt_compass = findViewById(R.id.compassText);
+
+        startCompass();
 
         double longitude = 0;
         double latitude = 0;
 
-        /*if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }else {
             LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -111,13 +138,13 @@ public class homepage extends AppCompatActivity implements SensorEventListener {
         System.out.println(countryCode);
 
 
-        retrieveWeather(postalCode, countryCode);*/
+        retrieveWeather(postalCode, countryCode);
 
         //Firebase test
-        User us = new User("2","1","Guillaume","toto@gmail.com","BETROM",5,5,5,5,5);
-        db_handler.addUser(us);
+        //User us = new User("2","1","Guillaume","toto@gmail.com","BETROM",5,5,5,5,5);
+        //db_handler.addUser(us);
 
-        db_handler.getUser("2");
+        //db_handler.getUser("2");
 
         Button showStatsbtn = (Button) findViewById(R.id.showStatsbtn);
         showStatsbtn.setOnClickListener(new View.OnClickListener() {
@@ -192,28 +219,111 @@ public class homepage extends AppCompatActivity implements SensorEventListener {
         mQueue.add(jor);
     }
 
+
+    public void startCompass(){
+        if(mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR) == null) {
+            if (mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD) == null
+                    || mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) == null) {
+                noSensorAlert();
+            } else {
+                mAcceloremeter = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+                mMagnemeter = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+
+                haveSensor = mSensorManager.registerListener(this, mAcceloremeter, SensorManager.SENSOR_DELAY_UI);
+                haveSensor2 = mSensorManager.registerListener(this, mMagnemeter, SensorManager.SENSOR_DELAY_UI);
+            }
+        } else{
+            mRotationV = mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
+            haveSensor = mSensorManager.registerListener(this, mAcceloremeter, SensorManager.SENSOR_DELAY_UI);
+        }
+    }
+
+    public void noSensorAlert(){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setMessage("Your device doesn't support the compass.")
+                .setCancelable(false)
+                .setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                });
+    }
+
+    public void stop(){
+        if (haveSensor && haveSensor2){
+            mSensorManager.unregisterListener(this, mAcceloremeter);
+            mSensorManager.unregisterListener(this, mMagnemeter);
+        } else{
+            if(haveSensor){
+                mSensorManager.unregisterListener(this, mRotationV);
+            }
+        }
+    }
+
     @Override
-    public void onSensorChanged(SensorEvent event) {
-        // get angle around the z-axis rotated
-        float degree = Math.round(event.values[0]);
-        //DegreeTV.setText("Heading: " + Float.toString(degree) + " degrees");
-        // rotation animation - reverse turn degree degrees
-        RotateAnimation ra = new RotateAnimation(
-                DegreeStart,
-                -degree,
-                Animation.RELATIVE_TO_SELF, 0.5f,
-                Animation.RELATIVE_TO_SELF, 0.5f);
-        // set the compass animation after the end of the reservation status
-        ra.setFillAfter(true);
-        // set how long the animation for the compass image will take place
-        ra.setDuration(210);
-        // Start animation of compass image
-        compassimage.startAnimation(ra);
-        DegreeStart = -degree;
+    protected void onPause(){
+        super.onPause();
+        stop();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        startCompass();
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        System.out.println("compass changed");
+        if(sensorEvent.sensor.getType() == Sensor.TYPE_ROTATION_VECTOR){
+            SensorManager.getRotationMatrixFromVector(rMat, sensorEvent.values);
+            mAzimuth = (int) ((Math.toDegrees(SensorManager.getOrientation(rMat, orientation)[0])+360)%360);
+        }
+        if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
+            System.arraycopy(sensorEvent.values, 0, mLastAccelerometer, 0, sensorEvent.values.length);
+            mLastAccelerometerSet = true;
+        }
+        else
+        if (sensorEvent.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD){
+            System.arraycopy(sensorEvent.values, 0, mLastMagnemeter, 0, sensorEvent.values.length);
+            mLastMagnemeterSet = true;
+        }
+
+        if (mLastMagnemeterSet && mLastAccelerometerSet){
+            SensorManager.getRotationMatrix(rMat, null, mLastAccelerometer, mLastMagnemeter);
+            SensorManager.getOrientation(rMat, orientation);
+            mAzimuth = (int) ((Math.toDegrees(SensorManager.getOrientation(rMat, orientation)[0]) + 360 ) % 360);
+        }
+
+        mAzimuth = Math.round(mAzimuth);
+        compassImage.setRotation(-mAzimuth);
+
+
+        String where = "NW";
+
+        if (mAzimuth >= 350 || mAzimuth <= 10)
+            where = "N";
+        if (mAzimuth < 350 && mAzimuth > 280)
+            where = "NW";
+        if (mAzimuth <= 280 && mAzimuth > 260)
+            where = "W";
+        if (mAzimuth <= 260 && mAzimuth > 190)
+            where = "SW";
+        if (mAzimuth <= 190 && mAzimuth > 170)
+            where = "S";
+        if (mAzimuth <= 170 && mAzimuth > 100)
+            where = "SE";
+        if (mAzimuth <= 100 && mAzimuth > 80)
+            where = "E";
+        if (mAzimuth <= 80 && mAzimuth > 10)
+            where = "NE";
+
+        txt_compass.setText(mAzimuth + "° " + where);
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
-        //Not used
+
     }
 }
