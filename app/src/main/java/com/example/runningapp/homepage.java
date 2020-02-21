@@ -153,6 +153,15 @@ public class homepage extends AppCompatActivity implements SensorEventListener {
             }
         });
 
+        Button route = findViewById(R.id.routesbtn);
+        route.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent ddd = new Intent(homepage.this, routeDetails.class);
+                startActivity(ddd);
+            }
+        });
+
     }
 
     public void retrieveWeather(String cityid, String countryCode){
@@ -199,7 +208,6 @@ public class homepage extends AppCompatActivity implements SensorEventListener {
                         default:
                             clothesView.setText("Pants + Sweater");
                     }
-
 
                 } catch (JSONException e) {
                     e.printStackTrace();
