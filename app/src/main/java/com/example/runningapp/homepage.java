@@ -12,6 +12,7 @@ import android.hardware.SensorManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
@@ -49,7 +50,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Locale;
 
-public class homepage extends AppCompatActivity implements SensorEventListener {
+public class homepage extends AppCompatActivity implements SensorEventListener, LocationListener {
 
     String BASE_URL = "https://api.openweathermap.org/data/2.5/weather?";
     String API_TOKEN = "20773309acdcb2327c3e622c91d0bd3f";
@@ -60,6 +61,7 @@ public class homepage extends AppCompatActivity implements SensorEventListener {
     TextView degrees;
     TextView rateView;
     TextView clothesView;
+    TextView speedTextView;
 
     int mAzimuth;
     private SensorManager mSensorManager;
@@ -74,6 +76,9 @@ public class homepage extends AppCompatActivity implements SensorEventListener {
     private boolean mLastMagnetometerSet = false;
     // record the angle turned of the compass picture
     private float DegreeStart = 0f;
+
+    private LocationManager lManager;
+    private DecimalFormat df;
 
     RequestQueue mQueue;
 
@@ -94,6 +99,25 @@ public class homepage extends AppCompatActivity implements SensorEventListener {
         degrees = findViewById(R.id.degrees);
         rateView = findViewById(R.id.humidity);
         clothesView = findViewById(R.id.outfit);
+        speedTextView = findViewById(R.id.speedTextView);
+        speedTextView.setText("-.- km/h");
+
+        df = new DecimalFormat("0.0");
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        }else{
+            lManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+            if (lManager != null) {
+
+                // updates each 0.5 second (500 ms) and 20 meters (2*10 meters)
+                lManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                        500,
+                        2,
+                        this);                                              // Configuration of the location updates
+            }
+        }
 
         mQueue = Volley.newRequestQueue(this);
 
@@ -165,7 +189,7 @@ public class homepage extends AppCompatActivity implements SensorEventListener {
     }
 
     public void retrieveWeather(String cityid, String countryCode){
-        String url = BASE_URL + "zip=" + cityid + "," + countryCode + "&appid=" + API_TOKEN;
+        String url = BASE_URL + "id=" + cityid + "&appid=" + API_TOKEN;
 
         JsonObjectRequest jor = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -208,6 +232,7 @@ public class homepage extends AppCompatActivity implements SensorEventListener {
                         default:
                             clothesView.setText("Pants + Sweater");
                     }
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -309,5 +334,55 @@ public class homepage extends AppCompatActivity implements SensorEventListener {
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
 
+    }
+
+
+    /**** Every time that the location matches our configuration we enter this function ****/
+
+    @Override
+    public void onLocationChanged(Location location) {
+        if(location == null){
+            speedTextView.setText("-.- km/h");
+        }else{
+            float currentSpeed = location.getSpeed() * 3.6f;             // Convertion from m/s to km/h
+            speedTextView.setText(df.format(currentSpeed ) + " km/h");   // we only keep one digit after the comma for the speed
+        }
+    }
+
+    @Override
+    public void onStatusChanged(String s, int i, Bundle bundle) {
+        //Nothing
+    }
+
+    @Override
+    public void onProviderEnabled(String s) {
+        //Nothing
+    }
+
+    @Override
+    public void onProviderDisabled(String s) {
+        //Nothing
+    }
+
+    /**** Function which stops the location updates ****/
+
+    public void stopLocationUpdates(){
+        lManager.removeUpdates(this);
+    }
+
+    /**** Function which starts the location updates ****/
+
+    public void startLocationUpdates(){
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        }else{
+            lManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+            if (lManager != null) {
+                lManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                        500,
+                        2,
+                        this);
+            }
+        }
     }
 }
