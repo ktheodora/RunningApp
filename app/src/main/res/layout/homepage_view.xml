@@ -109,12 +109,6 @@
             </LinearLayout>
 
 
-            <ImageView
-                android:id="@+id/compass"
-                android:layout_width="match_parent"
-                android:layout_height="69dp"
-                app:srcCompat="@drawable/compass" />
-
             <TextView
                 android:id="@+id/todaylabel"
                 android:layout_height="wrap_content"
@@ -146,7 +140,7 @@
 
                 <!-- Changing dynamically always so no need for @string value-->
                 <TextView
-                    android:id="@+id/avgSpeedLabel"
+                    android:id="@+id/city"
                     android:layout_width="190dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -158,7 +152,7 @@
                 <!-- Changing dynamically always so no need for @string value-->
 
                 <TextView
-                    android:id="@+id/avgSpeed"
+                    android:id="@+id/degrees"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -188,7 +182,7 @@
                     app:srcCompat="@drawable/humidity" />
 
                 <TextView
-                    android:id="@+id/distLabel"
+                    android:id="@+id/humidityLabel"
                     android:layout_width="190dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -200,7 +194,7 @@
                 <!-- Changing dynamically always so no need for @string value-->
 
                 <TextView
-                    android:id="@+id/dist"
+                    android:id="@+id/humidity"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -230,7 +224,7 @@
                     app:srcCompat="@drawable/tshirt" />
 
                 <TextView
-                    android:id="@+id/strtTimeLabel"
+                    android:id="@+id/outfitLabel"
                     android:layout_width="190dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -242,7 +236,7 @@
                 <!-- Changing dynamically always so no need for @string value-->
 
                 <TextView
-                    android:id="@+id/strtTime"
+                    android:id="@+id/outfit"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

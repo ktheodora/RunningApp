@@ -89,7 +89,7 @@ public class homepage extends AppCompatActivity implements SensorEventListener {
         dbHandler db_handler = new dbHandler(this);
         db_handler.setCtx(this);
 
-        System.out.println("TEMP --------------"+db_handler.userTemp);
+        //System.out.println("TEMP --------------"+db_handler.userTemp);
 
         city = (TextView) findViewById(R.id.city);
         degrees = findViewById(R.id.degrees);
@@ -104,7 +104,7 @@ public class homepage extends AppCompatActivity implements SensorEventListener {
 
         startCompass();
 
-        double longitude = 0;
+       /* double longitude = 0;
         double latitude = 0;
 
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
@@ -137,8 +137,8 @@ public class homepage extends AppCompatActivity implements SensorEventListener {
         System.out.println(postalCode);
         System.out.println(countryCode);
 
-
-        retrieveWeather(postalCode, countryCode);
+*/
+        retrieveWeather("264371", "GR");
 
         //Firebase test
         //User us = new User("2","1","Guillaume","toto@gmail.com","BETROM",5,5,5,5,5);
@@ -158,7 +158,7 @@ public class homepage extends AppCompatActivity implements SensorEventListener {
     }
 
     public void retrieveWeather(String cityid, String countryCode){
-        String url = BASE_URL + "zip=" + cityid + "," + countryCode + "&appid=" + API_TOKEN;
+        String url = BASE_URL + "id=" + cityid + "&appid=" + API_TOKEN;
 
         JsonObjectRequest jor = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
