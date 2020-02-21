@@ -28,14 +28,13 @@ public class menuHandler  {
     String usr;
     Context ctx;
     static String USERPREF = "USER"; // or other values
-    SharedPreferences sharedpreferences;
     dbHandler peopleDB;
-    public menuHandler() {}
-    public menuHandler(Context Ctx, String username) {
-        usr = username;
+
+    public menuHandler(Context Ctx) {
         ctx = Ctx;
         peopleDB = new dbHandler(ctx);
     }
+
 
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()){

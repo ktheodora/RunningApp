@@ -63,7 +63,7 @@ public class routeList extends AppCompatActivity {
 
         userr = dbhandler.getLoggedUser();
 
-        MenuHandler = new menuHandler(routeList.this, usr);
+        MenuHandler = new menuHandler(routeList.this);
         menuBtn = (ImageButton) findViewById(R.id.menuLines);
         menuBtn.setOnClickListener(new View.OnClickListener() {
             @Override

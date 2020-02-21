@@ -46,7 +46,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -62,6 +65,10 @@ public class homepage extends AppCompatActivity implements SensorEventListener, 
     TextView rateView;
     TextView clothesView;
     TextView speedTextView;
+
+    Button run;
+
+    boolean running;
 
     int mAzimuth;
     private SensorManager mSensorManager;
@@ -90,10 +97,14 @@ public class homepage extends AppCompatActivity implements SensorEventListener, 
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.homepage_view);
-        dbHandler db_handler = new dbHandler(this);
+        final dbHandler db_handler = new dbHandler(this);
         db_handler.setCtx(this);
 
-        //System.out.println("TEMP --------------"+db_handler.userTemp);
+        menuHandler menuHandler = new menuHandler(this);
+
+        run = findViewById(R.id.startStopbtn);
+
+        running = false;
 
         city = (TextView) findViewById(R.id.city);
         degrees = findViewById(R.id.degrees);
@@ -105,9 +116,9 @@ public class homepage extends AppCompatActivity implements SensorEventListener, 
         df = new DecimalFormat("0.0");
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
-        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-        }else{
+        } else {
             lManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
             if (lManager != null) {
 
@@ -160,9 +171,6 @@ public class homepage extends AppCompatActivity implements SensorEventListener, 
         System.out.println(countryCode);
 
 */
-
-
-
         retrieveWeather("264371", "GR");
 
         //Firebase test
@@ -180,9 +188,52 @@ public class homepage extends AppCompatActivity implements SensorEventListener, 
             }
         });
 
+       /* final boolean[] ok = {false};
+        final String[] startPosition = new String[1];
+        final DateFormat[] dateFormat = new DateFormat[1];
+        final Date[] debut = new Date[1];
+
+        run.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!ok[0]){
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        // TODO: Consider calling
+                        //    ActivityCompat#requestPermissions
+                        // here to request the missing permissions, and then overriding
+                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                        //                                          int[] grantResults)
+                        // to handle the case where the user grants the permission. See the documentation
+                        // for ActivityCompat#requestPermissions for more details.
+                        return;
+                    }
+                    Location loc = lManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    startPosition[0] = ""+loc.getLatitude()+loc.getLongitude();
+                    dateFormat[0] = new SimpleDateFormat("dd/MM/yyyy");
+                    debut[0] = new Date();
+
+                    ok[0] = !ok[0];
+                }else{
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        // TODO: Consider calling
+                        //    ActivityCompat#requestPermissions
+                        // here to request the missing permissions, and then overriding
+                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                        //                                          int[] grantResults)
+                        // to handle the case where the user grants the permission. See the documentation
+                        // for ActivityCompat#requestPermissions for more details.
+                        return;
+                    }
+                    Location loc = lManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    String endPosition = ""+loc.getLatitude()+loc.getLongitude();
+                    Route r = new Route(db_handler.getAllRoutes(db_handler.getLoggedUser()).size(),db_handler.getLoggedUser().getUserID(),10,10/2,);
+                }
+            }
+        });*/
+
     }
 
-    public void retrieveWeather(String cityid, String countryCode){
+    public void retrieveWeather(String cityid, String countryCode) {
         String url = BASE_URL + "id=" + cityid + "&appid=" + API_TOKEN;
 
         JsonObjectRequest jor = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -210,7 +261,7 @@ public class homepage extends AppCompatActivity implements SensorEventListener, 
                     degrees.setText(df.format(tempInCelsius) + " °C");
                     rateView.setText(humidity + " %");
 
-                    switch(main){
+                    switch (main) {
                         case "Thunderstorm":
                             clothesView.setText("Don't run today");
                         case "Drizzle":
@@ -245,8 +296,8 @@ public class homepage extends AppCompatActivity implements SensorEventListener, 
     }
 
 
-    public void startCompass(){
-        if(mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR) == null) {
+    public void startCompass() {
+        if (mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR) == null) {
             if ((mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD) == null)
                     || (mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) == null)) {
                 noSensorAlert();
@@ -257,13 +308,13 @@ public class homepage extends AppCompatActivity implements SensorEventListener, 
                 haveSensor = mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_UI);
                 haveSensor2 = mSensorManager.registerListener(this, mMagnetometer, SensorManager.SENSOR_DELAY_UI);
             }
-        } else{
+        } else {
             mRotationV = mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
             haveSensor = mSensorManager.registerListener(this, mRotationV, SensorManager.SENSOR_DELAY_UI);
         }
     }
 
-    public void noSensorAlert(){
+    public void noSensorAlert() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setMessage("Your device doesn't support the compass.")
                 .setCancelable(false)
@@ -276,48 +327,47 @@ public class homepage extends AppCompatActivity implements SensorEventListener, 
         alertDialog.show();
     }
 
-    public void stop(){
-        if (haveSensor && haveSensor2){
+    public void stop() {
+        if (haveSensor && haveSensor2) {
             mSensorManager.unregisterListener(this, mAccelerometer);
             mSensorManager.unregisterListener(this, mMagnetometer);
-        } else{
-            if(haveSensor){
+        } else {
+            if (haveSensor) {
                 mSensorManager.unregisterListener(this, mRotationV);
             }
         }
     }
 
     @Override
-    protected void onPause(){
+    protected void onPause() {
         super.onPause();
         stop();
     }
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
         startCompass();
     }
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        if(sensorEvent.sensor.getType() == Sensor.TYPE_ROTATION_VECTOR){
+        if (sensorEvent.sensor.getType() == Sensor.TYPE_ROTATION_VECTOR) {
             SensorManager.getRotationMatrixFromVector(rMat, sensorEvent.values);
-            mAzimuth = (int) (Math.toDegrees(SensorManager.getOrientation(rMat, orientation)[0])+360)%360;
+            mAzimuth = (int) (Math.toDegrees(SensorManager.getOrientation(rMat, orientation)[0]) + 360) % 360;
         }
-        if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
+        if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
             System.arraycopy(sensorEvent.values, 0, mLastAccelerometer, 0, sensorEvent.values.length);
             mLastAccelerometerSet = true;
-        }
-        else if (sensorEvent.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD){
+        } else if (sensorEvent.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
             System.arraycopy(sensorEvent.values, 0, mLastMagnetometer, 0, sensorEvent.values.length);
             mLastMagnetometerSet = true;
         }
 
-        if (mLastMagnetometerSet && mLastAccelerometerSet){
+        if (mLastMagnetometerSet && mLastAccelerometerSet) {
             SensorManager.getRotationMatrix(rMat, null, mLastAccelerometer, mLastMagnetometer);
             SensorManager.getOrientation(rMat, orientation);
-            mAzimuth = (int) (Math.toDegrees(SensorManager.getOrientation(rMat, orientation)[0]) + 360 ) % 360;
+            mAzimuth = (int) (Math.toDegrees(SensorManager.getOrientation(rMat, orientation)[0]) + 360) % 360;
         }
 
         mAzimuth = Math.round(mAzimuth);
