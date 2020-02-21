@@ -60,19 +60,18 @@ public class homepage extends AppCompatActivity implements SensorEventListener {
     TextView degrees;
     TextView rateView;
     TextView clothesView;
-    TextView txt_compass;
 
     int mAzimuth;
     private SensorManager mSensorManager;
     private ImageView compassImage;
-    private Sensor mRotationV, mAcceloremeter, mMagnemeter;
+    private Sensor mRotationV, mAccelerometer, mMagnetometer;
     float[] rMat = new float[9];
-    float[] orientation = new float[9];
+    float[] orientation = new float[3];
     private float[] mLastAccelerometer = new float[3];
-    private float[] mLastMagnemeter = new float[3];
+    private float[] mLastMagnetometer = new float[3];
     private boolean haveSensor = false, haveSensor2 = false;
     private boolean mLastAccelerometerSet = false;
-    private boolean mLastMagnemeterSet = false;
+    private boolean mLastMagnetometerSet = false;
     // record the angle turned of the compass picture
     private float DegreeStart = 0f;
 
@@ -100,7 +99,6 @@ public class homepage extends AppCompatActivity implements SensorEventListener {
 
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         compassImage = (ImageView) findViewById(R.id.compass);
-        txt_compass = findViewById(R.id.compassText);
 
         startCompass();
 
@@ -222,19 +220,19 @@ public class homepage extends AppCompatActivity implements SensorEventListener {
 
     public void startCompass(){
         if(mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR) == null) {
-            if (mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD) == null
-                    || mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) == null) {
+            if ((mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD) == null)
+                    || (mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) == null)) {
                 noSensorAlert();
             } else {
-                mAcceloremeter = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-                mMagnemeter = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+                mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+                mMagnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 
-                haveSensor = mSensorManager.registerListener(this, mAcceloremeter, SensorManager.SENSOR_DELAY_UI);
-                haveSensor2 = mSensorManager.registerListener(this, mMagnemeter, SensorManager.SENSOR_DELAY_UI);
+                haveSensor = mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_UI);
+                haveSensor2 = mSensorManager.registerListener(this, mMagnetometer, SensorManager.SENSOR_DELAY_UI);
             }
         } else{
             mRotationV = mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
-            haveSensor = mSensorManager.registerListener(this, mAcceloremeter, SensorManager.SENSOR_DELAY_UI);
+            haveSensor = mSensorManager.registerListener(this, mRotationV, SensorManager.SENSOR_DELAY_UI);
         }
     }
 
@@ -248,12 +246,13 @@ public class homepage extends AppCompatActivity implements SensorEventListener {
                         finish();
                     }
                 });
+        alertDialog.show();
     }
 
     public void stop(){
         if (haveSensor && haveSensor2){
-            mSensorManager.unregisterListener(this, mAcceloremeter);
-            mSensorManager.unregisterListener(this, mMagnemeter);
+            mSensorManager.unregisterListener(this, mAccelerometer);
+            mSensorManager.unregisterListener(this, mMagnetometer);
         } else{
             if(haveSensor){
                 mSensorManager.unregisterListener(this, mRotationV);
@@ -278,48 +277,25 @@ public class homepage extends AppCompatActivity implements SensorEventListener {
         System.out.println("compass changed");
         if(sensorEvent.sensor.getType() == Sensor.TYPE_ROTATION_VECTOR){
             SensorManager.getRotationMatrixFromVector(rMat, sensorEvent.values);
-            mAzimuth = (int) ((Math.toDegrees(SensorManager.getOrientation(rMat, orientation)[0])+360)%360);
+            mAzimuth = (int) (Math.toDegrees(SensorManager.getOrientation(rMat, orientation)[0])+360)%360;
         }
         if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
             System.arraycopy(sensorEvent.values, 0, mLastAccelerometer, 0, sensorEvent.values.length);
             mLastAccelerometerSet = true;
         }
-        else
-        if (sensorEvent.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD){
-            System.arraycopy(sensorEvent.values, 0, mLastMagnemeter, 0, sensorEvent.values.length);
-            mLastMagnemeterSet = true;
+        else if (sensorEvent.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD){
+            System.arraycopy(sensorEvent.values, 0, mLastMagnetometer, 0, sensorEvent.values.length);
+            mLastMagnetometerSet = true;
         }
 
-        if (mLastMagnemeterSet && mLastAccelerometerSet){
-            SensorManager.getRotationMatrix(rMat, null, mLastAccelerometer, mLastMagnemeter);
+        if (mLastMagnetometerSet && mLastAccelerometerSet){
+            SensorManager.getRotationMatrix(rMat, null, mLastAccelerometer, mLastMagnetometer);
             SensorManager.getOrientation(rMat, orientation);
-            mAzimuth = (int) ((Math.toDegrees(SensorManager.getOrientation(rMat, orientation)[0]) + 360 ) % 360);
+            mAzimuth = (int) (Math.toDegrees(SensorManager.getOrientation(rMat, orientation)[0]) + 360 ) % 360;
         }
 
         mAzimuth = Math.round(mAzimuth);
         compassImage.setRotation(-mAzimuth);
-
-
-        String where = "NW";
-
-        if (mAzimuth >= 350 || mAzimuth <= 10)
-            where = "N";
-        if (mAzimuth < 350 && mAzimuth > 280)
-            where = "NW";
-        if (mAzimuth <= 280 && mAzimuth > 260)
-            where = "W";
-        if (mAzimuth <= 260 && mAzimuth > 190)
-            where = "SW";
-        if (mAzimuth <= 190 && mAzimuth > 170)
-            where = "S";
-        if (mAzimuth <= 170 && mAzimuth > 100)
-            where = "SE";
-        if (mAzimuth <= 100 && mAzimuth > 80)
-            where = "E";
-        if (mAzimuth <= 80 && mAzimuth > 10)
-            where = "NE";
-
-        txt_compass.setText(mAzimuth + "° " + where);
     }
 
     @Override
