@@ -47,4 +47,12 @@
     <string name="todaylabel">"Conditions de course "</string>
     <string name="createacc">Creer un compte a la place</string>
     <string name="action_newacc">Creer un compte</string>
+    <string name="Steps">Pas</string>
+    <string name="avgspeed">Vitesse Moyenne</string>
+    <string name="dist">Distance</string>
+    <string name="duration">Durée</string>
+    <string name="endpoint">Arrivée</string>
+    <string name="startpoint">Départ</string>
+    <string name="starttime">Temps de départ</string>
+    <string name="routedetails">Détails du trajet</string>
 </resources>

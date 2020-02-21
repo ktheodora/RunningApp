@@ -78,21 +78,21 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_marginTop="40dp"
+                android:background="#F5F5F5"
 
-                android:background="#F5F5F5">
+                android:orientation="vertical">
 
                 <Button
                     android:id="@+id/startStopbtn"
                     android:layout_width="130dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
-                    android:text="@string/startbtn"
+                    android:background="#90A4AE"
                     android:gravity="center"
+                    android:text="@string/startbtn"
                     android:textColor="#ffffff"
-                    android:textSize="15sp"
-                    android:background="#90A4AE"/>
+                    android:textSize="15sp" />
 
                 <ImageView
                     android:paddingTop="10dp"
@@ -177,7 +177,7 @@
                     app:srcCompat="@drawable/humidity" />
 
                 <TextView
-                    android:id="@+id/humiditylabel"
+                    android:id="@+id/humidityLabel"
                     android:layout_width="190dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -219,7 +219,7 @@
                     app:srcCompat="@drawable/tshirt" />
 
                 <TextView
-                    android:id="@+id/outfitlabel"
+                    android:id="@+id/outfitLabel"
                     android:layout_width="190dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
