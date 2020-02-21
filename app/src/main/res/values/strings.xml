@@ -46,7 +46,7 @@
     <string name="calories">Total kcal loss for selected period</string>
     <string name="graphlabel1">Km run per day</string>
     <string name="graphlabel2">Calories Loss per day</string>
-    <string name="graphlabel3"> % Achieved km goal</string>
+    <string name="graphlabel3">Total of running time:</string>
 
     <!--settings values-->
 
@@ -64,7 +64,7 @@
 
     <!--row values-->
     <string name="rowdate_tag">Date: </string>
-    <string name="rowtime_tag">Starting Time: </string>
+    <string name="rowtime_tag">Starting Time:</string>
     <string name="rowdur_tag">Duration: </string>
     <string name="rowloc_tag">Location: </string>
 

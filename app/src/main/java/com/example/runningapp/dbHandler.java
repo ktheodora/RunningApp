@@ -312,6 +312,22 @@ public class dbHandler extends SQLiteOpenHelper {
                 new String[]{String.valueOf(route.getRouteID())});
     }
 
+    public boolean routeExists(Route r) {
+        //String selectQuery = "SELECT * FROM " + TABLE_EXPENSES + " WHERE " + KEY_USN + " = " + user.getUsername();
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.query(TABLE_ROUTE, new String[] {KEY_RTID,KEY_USID,KEY_DIST  ,
+                        KEY_STRT ,KEY_END ,KEY_STIME , KEY_DUR , KEY_AVG }, KEY_USID + "=?",
+                new String[] { r.getRouteID() }, null, null, null, null);
+        //Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor!=null && cursor.getCount()>0) {
+            cursor.close();
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     public ArrayList<Route> getAllRoutes(User user) {
         ArrayList<Route> routeList = new ArrayList<Route>();
         // Select All Query

@@ -188,7 +188,7 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:textColor="#3389FF"
-                    android:text="2km/h"
+                    android:text=""
                     android:textSize="20sp" />
 
 
@@ -230,7 +230,7 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:textColor="#3389FF"
-                    android:text="200"
+                    android:text=""
                     android:textSize="20sp" />
 
 
@@ -272,7 +272,7 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:textColor="#3389FF"
-                    android:text="200"
+                    android:text=""
                     android:textSize="20sp" />
 
 
@@ -313,16 +313,38 @@
                 android:background="#ffffff"
                 >
             </com.github.mikephil.charting.charts.LineChart>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="#F5F5F5"
+            android:layout_gravity="center">
             <TextView
                 android:id="@+id/graphlabel3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
                 android:text="@string/graphlabel3"
+                android:textSize="20sp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="     "
+                android:textSize="20sp"
+                />
+            <TextView
+                android:id="@+id/durSumText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
                 android:textSize="20sp" />
+
+        </LinearLayout>
             <lecho.lib.hellocharts.view.PieChartView
-                android:id="@+id/goalChart"
+                android:id="@+id/durSumChart"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_width="match_parent"
