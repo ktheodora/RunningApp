@@ -34,6 +34,11 @@ public class menuHandler  {
         ctx = Ctx;
         peopleDB = new dbHandler(ctx);
     }
+    public menuHandler(Context Ctx, String User) {
+        ctx = Ctx;
+        peopleDB = new dbHandler(ctx);
+        usr = User;
+    }
 
 
     public boolean onMenuItemClick(MenuItem item) {
