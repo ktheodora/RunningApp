@@ -15,7 +15,7 @@
     <string name="calories">Total de calories perdues pour la période sélectionnée</string>
     <string name="graphlabel1">Km courus par jour</string>
     <string name="graphlabel2">Calories perdues par jour</string>
-    <string name="graphlabel3">% Objectif de Km</string>
+    <string name="graphlabel3">Temps total de course: </string>
     <string name="humiditylabel">Humidité</string>
     <string name="loginname_text">Prénom</string>
     <string name="loginsurname_text">Nom</string>

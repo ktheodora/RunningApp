@@ -34,6 +34,13 @@
                     android:textColor="#000000"
                     android:textSize="20sp"/>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="     "
+                    android:textSize="20sp"
+                    />
                 <!-- Changing dynamically always so no need for @string value-->
 
                 <TextView
@@ -73,6 +80,13 @@
                 <!-- Changing dynamically always so no need for @string value-->
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="     "
+                    android:textSize="20sp"
+                    />
+                <TextView
                     android:id="@+id/rowdur_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -106,6 +120,13 @@
 
                 <!-- Changing dynamically always so no need for @string value-->
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="     "
+                    android:textSize="20sp"
+                    />
                 <TextView
                     android:id="@+id/rowloc_text"
                     android:layout_width="wrap_content"
